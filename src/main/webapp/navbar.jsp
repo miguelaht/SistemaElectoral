@@ -1,0 +1,100 @@
+<%--
+    Document   : navbar
+    Created on : Feb 8, 2021, 4:39:33 PM
+    Author     : miguelaht
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="home.jsp">Elecciones</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="logout.jsp">Sign out</a>
+        </li>
+    </ul>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="votar.jsp?tipo=PRESIDENTE">
+                            <span data-feather="home"></span>
+                            Papeleta Presidentes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="votar.jsp?tipo=ALCALDE">
+                            <span data-feather="file"></span>
+                            Papeleta Alcaldes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="votar.jsp?tipo=DIPUTADO">
+                            <span data-feather="shopping-cart"></span>
+                            Papeleta Diputados
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="bar-chart-2"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                </ul>
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Administrar</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp">
+                            <span data-feather="shopping-cart"></span>
+                            Personas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="formCandidatos.jsp">
+                            <span data-feather="file"></span>
+                            Candidatos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPartidos.jsp">
+                            <span data-feather="shopping-cart"></span>
+                            Partidos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listMesas.jsp">
+                            <span data-feather="users"></span>
+                            Mesas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="formPapeleta.jsp">
+                            <span data-feather="users"></span>
+                            Papeletas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+
+    </div>
+
+</div>
