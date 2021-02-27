@@ -5,7 +5,7 @@
  * @param {String} html             Data associated with the marker
  */
 function addMarkerToGroup(group, coordinate, html) {
-    var marker = new H.map.Marker(coordinate);
+    const marker = new H.map.Marker(coordinate);
     // add custom data to the marker
     marker.setData(html);
     group.addObject(marker);
@@ -17,14 +17,13 @@ function addMarkerToGroup(group, coordinate, html) {
  * @param  {H.Map} map      A HERE Map instance within the application
  */
 function addInfoBubble(map, id, estado, depto, muni, lat, lng, desc, votantes) {
-    console.log("depto" + depto, muni);
-    var group = new H.map.Group();
+    const group = new H.map.Group();
     map.addObject(group);
     // add 'tap' event listener, that opens info bubble, to the group
     group.addEventListener('tap', function (evt) {
         // event target is the marker itself, group is a parent event target
         // for all objects that it contains
-        var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+        const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
             // read custom data
             content: evt.target.getData()
         });
@@ -49,7 +48,7 @@ function setUpClickListener(map) {
 // Attach an event listener to map display
 // obtain the coordinates and display in an alert box.
     map.addEventListener('tap', function (evt) {
-        var coord = map.screenToGeo(evt.currentPointer.viewportX,
+        const coord = map.screenToGeo(evt.currentPointer.viewportX,
                 evt.currentPointer.viewportY);
         logEvent(
                 Math.abs(coord.lat.toFixed(4)),
@@ -75,9 +74,9 @@ function logEvent(lat, lng) {
 const platform = new H.service.Platform({
     apikey: 'TKCxKDWABN53GlLfc5VKPXsCaiDm2E02qQTqD8l1pBI'
 });
-var defaultLayers = platform.createDefaultLayers();
+const defaultLayers = platform.createDefaultLayers();
 // initialize a map - this map is centered over Europe
-var map = new H.Map(document.getElementById('map'),
+const map = new H.Map(document.getElementById('map'),
         defaultLayers.vector.normal.map, {
             center: {lat: 14.8689, lng: -86.93},
             zoom: 7,
@@ -87,9 +86,9 @@ var map = new H.Map(document.getElementById('map'),
 window.addEventListener('resize', () => map.getViewPort().resize());
 // MapEvents enables the event system
 // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 // create default UI with layers provided by the platform
-var ui = H.ui.UI.createDefault(map, defaultLayers);
+const ui = H.ui.UI.createDefault(map, defaultLayers);
 
 
 // get coordinate

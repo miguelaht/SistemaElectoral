@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 import io.github.cdimascio.dotenv.Dotenv;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,7 +33,7 @@ public class Dba {
     public Dba Conectar() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            String BaseDeDatos = "jdbc:oracle:thin:@"+dotenv.get("ORACLE_IP")+":test";
+            String BaseDeDatos = "jdbc:oracle:thin:@"+dotenv.get("ORACLE_IP")+":"+dotenv.get("ORACLE_SID");
             conexion = DriverManager.getConnection(BaseDeDatos, dotenv.get("ORACLE_USER"), dotenv.get("ORACLE_PASS"));
             query = conexion.createStatement();
 

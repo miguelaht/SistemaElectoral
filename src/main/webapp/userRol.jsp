@@ -10,7 +10,7 @@
     try {
         db.Conectar();
         String query = String.format("UPDATE Usuario SET rol='%s' WHERE id_persona='%s'",
-                request.getParameter("rol_opt"), request.getParameter("rol_id"));
+                request.getParameter("rol_opt"), request.getParameter("id"));
         db.query.execute(query);
         db.desconectar();
     } catch (Exception e) {

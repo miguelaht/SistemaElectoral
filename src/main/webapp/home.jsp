@@ -18,7 +18,7 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
+    <h4><%=session.getAttribute("s_rol")%></h4>
 </main>
 </body>
 </html>
