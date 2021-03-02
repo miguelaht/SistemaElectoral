@@ -21,13 +21,6 @@
     String mID = null;
     List<List> items = new ArrayList<List>();
 %>
-<%
-    String queryMiembros = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 "
-            + "FROM Personas p "
-            + "INNER JOIN MesaPersona mp on mp.id_persona = p.id "
-            + "INNER JOIN Mesas m on mp.id_mesa = m.id "
-            + "WHERE m.id=%s";
-%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -117,10 +110,7 @@
             <td><%=rs.getString(7)%>
             </td>
             <td>
-                <button onclick="<%mID = rs.getString(1);%>" class="btn btn-sm btn-primary"
-                        data-toggle="modal" data-target="#exampleModalCenter"
-                >Miembros de Mesa
-                </button>
+                <a href="mesa.jsp?mID=<%=rs.getString(1)%>" class="nav-link">Miembros de Mesa</a>
             </td>
         </tr>
         <%
@@ -133,32 +123,10 @@
         </tbody>
 
     </table>
-    <div class="col-md-6 w-100 rounded border mt-2">
+    <div class="col-md-6 w-100 rounded border mt-2 mb-2">
         <div style="height: 500px" id="map"></div>
     </div>
 </main>
-
-<!-- Modal -->
-<div class="modal bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="d-flex flex-column">
-                    <h5 class="modal-title">Miembros de Mesa</h5>
-                </div>
-            </div>
-            <div class="modal-body">
-                <jsp:include page="listMiembros.jsp">
-                    <jsp:param name="query" value='<%=String.format(queryMiembros, mID)%>'/>
-                </jsp:include>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <jsp:include page="tableFooter.jsp"/>
 <script src='js/map.js'></script>
@@ -172,9 +140,6 @@
 }catch(Exception e){
 e.printStackTrace();
 }%>
-    //id, estado, depto, muni, lat, lng, desc, votantes
-
-    //addInfoBubble(map, rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7))%>
 </script>
 </body>
 </html>

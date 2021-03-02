@@ -37,12 +37,11 @@ public class Dba {
             conexion = DriverManager.getConnection(BaseDeDatos, dotenv.get("ORACLE_USER"), dotenv.get("ORACLE_PASS"));
             query = conexion.createStatement();
 
-            if (conexion != null) {
-                System.out.println("Conexion exitosa ");
-            } else {
+            if (conexion == null) {
                 System.out.println("Conexion fallida");
             }
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
         return this;
     }
@@ -52,6 +51,7 @@ public class Dba {
             query.close();
             conexion.close();
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,6 +59,7 @@ public class Dba {
         try {
             conexion.commit();
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

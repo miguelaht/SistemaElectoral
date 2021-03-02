@@ -80,7 +80,7 @@
     function userPass(form) {
         let id = document.getElementById('id_p').value;
         addHidden(form, "id", id);
-        window.alert("El password sera reestablecido y enviado por correo");
+        window.alert("El password sera reestablecido y enviado por email");
     }
 
     function addID(form) {
@@ -149,9 +149,9 @@
             </td>
             <td><%=rs.getString(4) != null ? "Activo" : "Inactivo"%>
             </td>
-            <td><%=rs.getString(5) != null ? "Activo" : "Inactivo"%>
+            <td><%=rs.getString(5) != null ? "Asignado" : "Pendiente"%>
             </td>
-            <td><%=rs.getString(6) != null ? rs.getString(6) : ""%>
+            <td><%=rs.getString(6) != null ? "Activo" : "Inactivo"%>
             </td>
             <%if (session.getAttribute("s_rol").equals("AS")) {%>
             <td><%=rs.getString(7)%>

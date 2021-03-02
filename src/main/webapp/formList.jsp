@@ -30,9 +30,11 @@
         data-toolbar="#toolbar">
     <thead>
     <tr>
+        <% if (request.getParameter("check") != null || request.getParameter("radio") != null){%>
         <th>
             Seleccionar
         </th>
+        <%}%>
         <th data-field="id">ID</th>
         <th data-field="n1">Primer Nombre</th>
         <th data-field="n2">Segundo Nombre</th>
@@ -52,12 +54,14 @@
             while (rs.next()) {
     %>
     <tr>
+        <% if (request.getParameter("check") != null || request.getParameter("radio") != null){%>
         <td>
-            <input <%=request.getParameter("radio")%> value="<%=rs.getString(1)%>" class="form-check-input" type="radio"
-                                                      id="id_p" name="id_p">
+            <input <%=request.getParameter("radio")%> value="<%=rs.getString(1)%>" class="form-check-input"
+                                                      type="radio" name="id_p"/>
             <input <%=request.getParameter("check")%> value="<%=rs.getString(1)%>" class="form-check-input"
-                                                      type="checkbox" id="id_p" name="id_p">
+                                                      type="checkbox" name="id_p"/>
         </td>
+        <%}%>
         <td><%=rs.getString(1)%>
         </td>
         <td><%=rs.getString(2)%>

@@ -122,13 +122,13 @@
     </div>
 
     <h4>Alcaldes</h4>
-    <jsp:include page="listMiembros.jsp">
+    <jsp:include page="formList.jsp">
         <jsp:param name="query" value='<%=String.format(
 			queryCandidatos, "ALCALDE", request.getParameter("party").toUpperCase())%>'/>
     </jsp:include>
 
     <h4>Diputados</h4>
-    <jsp:include page="listMiembros.jsp">
+    <jsp:include page="formList.jsp">
         <jsp:param name="query" value='<%=String.format(
 			queryCandidatos, "DIPUTADO", request.getParameter("party").toUpperCase())%>'/>
     </jsp:include>
