@@ -15,12 +15,15 @@
 %>
 
 <%
-    String query = "SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO, "
-            + "PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO "
-            + "FROM PAPELETAELECTORAL PE "
-            + "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO "
-            + "INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID "
-            + "WHERE CA.ID_CARGO = '%s' AND CA.ID_PERSONA IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
+    String query = """
+            SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO,
+            PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO
+            FROM PAPELETAELECTORAL PE
+            INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO
+            INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID
+            INNER JOIN MESAPERSONA M on PR.ID = M.ID_PERSONA
+            WHERE CA.ID_CARGO = '%s' AND M.ID_MESA = %s AND CA.ID_PERSONA IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)
+            """;
 %>
 
 
@@ -29,7 +32,8 @@
         try {
             Dba db = new Dba();
             db.Conectar();
-            db.query.execute(String.format(query, request.getParameter("tipo")));
+            db.query.execute(String.format(query, request.getParameter("tipo"),
+                    session.getAttribute("s_mesa")));
             ResultSet rs = db.query.getResultSet();
             while (rs.next()) {
     %>

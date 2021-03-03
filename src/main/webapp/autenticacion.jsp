@@ -13,11 +13,12 @@
         Dba db = new Dba();
         db.Conectar();
         String pass = CryptoHash.getHash(request.getParameter("password"));
-        boolean ok = db.query.execute(String.format("SELECT U.ROL FROM USUARIO U "
-                        + "INNER JOIN PERSONAS P ON P.ID = U.ID_PERSONA "
-                        + "WHERE U.ID_PERSONA='%s' AND U.PASSWORD='%s'",
-                // AND u.estado_p=1 AND u.estado_u=1
-                request.getParameter("id"), pass));
+        String query = String.format("SELECT U.ROL, M.ID_MESA FROM USUARIO U\n" +
+                                     "INNER JOIN PERSONAS P ON P.ID = U.ID_PERSONA\n" +
+                                     "LEFT JOIN MESAPERSONA M on P.ID = M.ID_PERSONA\n" +
+                                     "WHERE U.ID_PERSONA='%s' AND U.PASSWORD='%s'\n",
+                request.getParameter("id"), pass);
+        boolean ok = db.query.execute(query);
 
         ResultSet rs = db.query.getResultSet();
 
@@ -25,6 +26,7 @@
             if (rs.getString(1) != null) {
                 session.setAttribute("s_id", request.getParameter("id"));
                 session.setAttribute("s_rol", rs.getString(1));
+                session.setAttribute("s_mesa", rs.getString(2));
             }
         }
 

@@ -121,7 +121,7 @@
         %>
     </div>
 
-    <form action="rmCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
+    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
         <h4>Alcaldes</h4>
         <jsp:include page="formList.jsp">
             <jsp:param name="query" value='<%=String.format(
@@ -132,7 +132,7 @@
         <input class="btn btn-sm btn-danger" type="submit" name="submit" value="Remover Alcalde"/>
     </form>
 
-    <form action="rmCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
+    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
         <h4>Diputados</h4>
         <jsp:include page="formList.jsp">
             <jsp:param name="query" value='<%=String.format(

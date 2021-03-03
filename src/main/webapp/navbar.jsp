@@ -86,7 +86,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="papeletas.jsp">
+                           href="listPapeletas.jsp">
                             <span data-feather="users"></span>
                             Papeletas
                         </a>
