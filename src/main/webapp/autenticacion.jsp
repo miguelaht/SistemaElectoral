@@ -6,16 +6,18 @@
 
 <%@page import="java.sql.*" %>
 <%@ page import="database.Dba" %>
+<%@ page import="util.CryptoHash" %>
 
 <%
     try {
         Dba db = new Dba();
         db.Conectar();
-        boolean ok = db.query.execute(String.format("SELECT u.rol FROM Usuario u\n"
-                        + "INNER JOIN Personas p ON p.id = u.id_persona\n"
-                        + "WHERE u.id_persona='%s' AND u.password='%s'",
+        String pass = CryptoHash.getHash(request.getParameter("password"));
+        boolean ok = db.query.execute(String.format("SELECT U.ROL FROM USUARIO U "
+                        + "INNER JOIN PERSONAS P ON P.ID = U.ID_PERSONA "
+                        + "WHERE U.ID_PERSONA='%s' AND U.PASSWORD='%s'",
                 // AND u.estado_p=1 AND u.estado_u=1
-                request.getParameter("id"), request.getParameter("password")));
+                request.getParameter("id"), pass));
 
         ResultSet rs = db.query.getResultSet();
 

@@ -18,11 +18,11 @@
     }
 %>
 <%
-    String queryMiembros = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 "
-            + "FROM Personas p "
-            + "INNER JOIN MesaPersona mp on mp.id_persona = p.id "
-            + "INNER JOIN Mesas m on mp.id_mesa = m.id "
-            + "WHERE m.id=%s";
+    String queryMiembros = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 "
+            + "FROM PERSONAS P "
+            + "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA = P.ID "
+            + "INNER JOIN MESAS M ON MP.ID_MESA = M.ID "
+            + "WHERE M.ID=%s";
 %>
 <%
     if (request.getParameter("submit") != null) {
@@ -33,7 +33,7 @@
             db.Conectar();
             if (miembros != null && miembros.length > 0) {
                 for (String id : miembros) {
-                    db.query.execute(String.format("DELETE FROM MesaPersona WHERE id_persona = '%s' AND id_mesa = '%s'"
+                    db.query.execute(String.format("DELETE FROM MESAPERSONA WHERE ID_PERSONA = '%s' AND ID_MESA = '%s'"
                             , id, request.getParameter("m_id")));
                 }
             }

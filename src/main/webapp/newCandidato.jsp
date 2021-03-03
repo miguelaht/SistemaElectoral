@@ -59,7 +59,7 @@
         Dba db = new Dba();
         db.Conectar();
         System.out.println(fichero.getName());
-        String query = String.format("INSERT INTO CANDIDATO (id_persona, id_partido, id_cargo, foto) VALUES ('%s', '%s', '%s', '%s')",
+        String query = String.format("INSERT INTO CANDIDATO (ID_PERSONA, ID_PARTIDO, ID_CARGO, FOTO) VALUES ('%s', '%s', '%s', '%s')",
                 p_id, party, cargo, fichero.getName());
 
         db.query.execute(query);

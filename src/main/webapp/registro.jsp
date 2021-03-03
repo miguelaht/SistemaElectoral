@@ -11,6 +11,7 @@
 
 <%@page import="database.Dba" %>
 <%@page import="util.Mail" %>
+<%@page import="util.CryptoHash" %>
 <!--Registro de personas-->
 
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -25,12 +26,12 @@
         try {
             Dba db = new Dba();
             db.Conectar();
-            int exists = db.query.executeUpdate(String.format("SELECT id FROM PERSONAS WHERE id='%s'", request.getParameter("id")));
+            int exists = db.query.executeUpdate(String.format("SELECT ID FROM PERSONAS WHERE ID='%s'", request.getParameter("id")));
 
             if (exists == 0) {
                 // save personal data
-                db.query.execute(String.format("INSERT INTO PERSONAS (id, nombre1, nombre2, apellido1, "
-                                + "apellido2, email, telefono) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                db.query.execute(String.format("INSERT INTO PERSONAS (ID, NOMBRE1, NOMBRE2, APELLIDO1, "
+                                + "APELLIDO2, EMAIL, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                         request.getParameter("id"), request.getParameter("name1"),
                         request.getParameter("name2"), request.getParameter("sur1"),
                         request.getParameter("sur2"), request.getParameter("email"), request.getParameter("cel")));
@@ -38,15 +39,18 @@
                 Mail msg = new Mail();
                 String code = msg.sendMail(request.getParameter("email"), application.getRealPath("WEB-INF/") + "main.py");
 
+                // hash password
+                String hash = code != null ? CryptoHash.getHash(code) : null;
+
                 // save user and password if email was given
-                db.query.execute(String.format("INSERT INTO USUARIO (id_persona, estado_u, password, estado_p, rol ) VALUES ('%s', %s, '%s', '%s', '%s')",
-                        request.getParameter("id"), 0, code, 1, "EL"));
+                db.query.execute(String.format("INSERT INTO USUARIO (ID_PERSONA, ESTADO_U, PASSWORD, ESTADO_P, ROL ) VALUES ('%s', %s, '%s', '%s', '%s')",
+                        request.getParameter("id"), 0, hash, 1, "EL"));
 
                 db.desconectar();
                 if (code == null) {
-                    out.print("<script>alert('Datos almacenados. Solicite clave de acceso en mesa')</script>");
+                    out.print("<script>alert('Usuario registrado. Solicite clave de acceso en mesa')</script>");
                 } else {
-                    out.print("<script>alert('Datos almacenados. La clave de acceso a sido envida por email')</script>");
+                    out.print("<script>alert('Usuario registrado. La clave de acceso a sido envida por email')</script>");
                 }
             } else {
                 out.print("<script>alert('Datos personales ya han sido registrados. Contacte al administrador')</script>");
@@ -60,8 +64,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
@@ -80,7 +86,8 @@
                 <div class="col-md-6 pt-3">
                 </div>
                 <div class="pt-3 d-grid gap-2 col-6 mx-auto">
-                    <input type="submit" class="btn btn-primary" class="form-control" name="submit" value="Registrar"
+                    <input type="submit" class="btn btn-primary" class="form-control" name="submit"
+                           value="Registrar"
                            id="submit">
                 </div>
             </form>

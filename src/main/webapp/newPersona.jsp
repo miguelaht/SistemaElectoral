@@ -25,7 +25,7 @@
 
             db.query.execute(
                     String.format(
-                            "INSERT INTO Personas (id, nombre1, nombre2, apellido1, apellido2, email, telefono) "
+                            "INSERT INTO PERSONAS (ID, NOMBRE1, NOMBRE2, APELLIDO1, APELLIDO2, EMAIL, TELEFONO) "
                                     + "VALUES ('%s', '%s','%s', '%s','%s', '%s','%s')",
                             request.getParameter("id"), request.getParameter("name1"), request.getParameter("name2"), request.getParameter("sur1"),
                             request.getParameter("sur2"), request.getParameter("email"), request.getParameter("cel")
@@ -34,25 +34,10 @@
 
             db.query.execute(
                     String.format(
-                            "INSERT INTO Usuario (id_persona, estado_u, password, estado_p, rol) "
-                                    + "VALUES ('%s', 0, null, 0, '%s')", request.getParameter("id"), request.getParameter("rol")
+                            "INSERT INTO USUARIO (ID_PERSONA, ESTADO_U, PASSWORD, ESTADO_P, ROL) "
+                                    + "VALUES ('%s', 0, NULL, 0, '%s')", request.getParameter("id"), request.getParameter("rol")
                     )
             );
-/*
-
-            PreparedStatement stmt=con.prepareStatement("");
-
-                 + "declare "
-                 + "begin"
-                 + "   metodo_guardar(?,?);"
-                 + "   commit;"
-                 + "end;");
-            //pedir los parametros para enviar al metodo
-            stmt.setInt(1,100);//1 codigo = 100
-            stmt.setString(2,"Osman Mejia"); //2 nombre = osman
-            int i=stmt.executeUpdate();
-            */
-
             db.desconectar();
 
         } catch (Exception e) {
@@ -82,7 +67,7 @@
                     try {
                         Dba db = new Dba();
                         db.Conectar();
-                        db.query.execute("SELECT rol, descripcion FROM Roles");
+                        db.query.execute("SELECT ROL, DESCRIPCION FROM ROLES");
                         ResultSet rs = db.query.getResultSet();
                         while (rs.next()) {
                 %>

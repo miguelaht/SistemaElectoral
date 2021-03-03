@@ -12,9 +12,25 @@
     Dba db = new Dba();
     try {
         db.Conectar();
-        String query = String.format("INSERT INTO MesaPersona (id_persona, id_mesa) VALUES('%s', %s)",
-                request.getParameter("id"), request.getParameter("mesa"));
-        db.query.execute(query);
+        Connection con = db.getConexion();
+        try (PreparedStatement ps = con.prepareStatement("""
+                BEGIN
+                   INSERT INTO MESAPERSONA (ID_PERSONA, ID_MESA)
+                      VALUES(?, ?);
+                EXCEPTION
+                   WHEN DUP_VAL_ON_INDEX THEN
+                      UPDATE MESAPERSONA
+                      SET    ID_MESA = ?
+                      WHERE  ID_PERSONA = ?;
+                END;
+                """)) {
+            ps.setString(1, request.getParameter("id"));
+            ps.setString(3, request.getParameter("id"));
+            ps.setString(2, request.getParameter("mesa"));
+            ps.setString(4, request.getParameter("mesa"));
+
+            ps.execute();
+        }
         db.desconectar();
     } catch (Exception e) {
         e.printStackTrace();

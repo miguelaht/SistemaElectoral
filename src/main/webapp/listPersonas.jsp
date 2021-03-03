@@ -18,19 +18,19 @@
 %>
 <%
     // every person
-    String queryAdmin = String.format("SELECT p.id, p.nombre1 || ' ' || p.nombre2 || ' ' ||  p.apellido1 || ' ' || p.apellido2, u.rol, " +
-            "u.estado_u, u.password, u.estado_p, m.id_mesa FROM PERSONAS p " +
-            "INNER JOIN USUARIO u ON p.id = u.id_persona " +
-            "LEFT JOIN MesaPersona m ON m.id_persona = p.id " +
-            "WHERE p.id <>'%s'", session.getAttribute("s_id"));
+    String queryAdmin = String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
+            "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
+            "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
+            "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID " +
+            "WHERE P.ID <>'%s'", session.getAttribute("s_id"));
 
     // people on same table as miembro de mesa
     String queryMiembro = String.format(
-            "SELECT p.id, p.nombre1 || ' ' || p.nombre2 || ' ' ||  p.apellido1 || ' ' || p.apellido2, u.rol, " +
-                    "u.estado_u, u.password, u.estado_p FROM PERSONAS p " +
-                    "LEFT JOIN USUARIO u ON p.id = u.id_persona " +
-                    "INNER JOIN MesaPersona mp ON mp.id_persona= p.id " +
-                    "WHERE p.id <>'%s', u.rol = 'EL' AND mp.id_mesa = %s",
+            "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
+                    "U.ESTADO_U, U.PASSWORD, U.ESTADO_P FROM PERSONAS P " +
+                    "LEFT JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
+                    "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA= P.ID " +
+                    "WHERE P.ID <>'%s', U.ROL = 'EL' AND MP.ID_MESA = %s",
             request.getParameter("s_id"), request.getParameter("s_mesa"));
 %>
 <html>

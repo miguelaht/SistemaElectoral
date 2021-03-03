@@ -25,8 +25,8 @@
                         try {
                             Dba db = new Dba();
                             db.Conectar();
-                            db.query.execute("SELECT m.id, u.departamento, u.municipio, u.descripcion FROM Mesas m " +
-                                    "INNER JOIN Ubicacion u ON m.ubicacion = u.id");
+                            db.query.execute("SELECT M.ID, U.DEPARTAMENTO, U.MUNICIPIO, U.DESCRIPCION FROM MESAS M " +
+                                    "INNER JOIN UBICACION U ON M.UBICACION = U.ID");
                             ResultSet rs = db.query.getResultSet();
                             while (rs.next()) {%>
                     <option value=<%=rs.getString(1)%>><%=rs.getString(2)%>, <%=rs.getString(3)%>

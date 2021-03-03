@@ -76,11 +76,11 @@
             try {
                 Dba db = new Dba();
                 db.Conectar();
-                db.query.execute("SELECT m.id, m.estado, u.departamento, u.municipio, u.latitud, u.longitud, u.descripcion, COUNT(mp.id_mesa) "
-                        + "FROM Mesas m "
-                        + "LEFT JOIN MesaPersona mp ON m.id = mp.id_mesa "
-                        + "INNER JOIN Ubicacion u ON m.ubicacion = u.id "
-                        + "GROUP BY m.id, m.estado, u.departamento, u.municipio, u.latitud, u.longitud, u.descripcion");
+                db.query.execute("SELECT M.ID, M.ESTADO, U.DEPARTAMENTO, U.MUNICIPIO, U.LATITUD, U.LONGITUD, U.DESCRIPCION, COUNT(MP.ID_MESA) "
+                        + "FROM MESAS M "
+                        + "LEFT JOIN MESAPERSONA MP ON M.ID = MP.ID_MESA "
+                        + "INNER JOIN UBICACION U ON M.UBICACION = U.ID "
+                        + "GROUP BY M.ID, M.ESTADO, U.DEPARTAMENTO, U.MUNICIPIO, U.LATITUD, U.LONGITUD, U.DESCRIPCION");
                 ResultSet rs = db.query.getResultSet();
                 while (rs.next()) {
                     List list1 = new ArrayList();

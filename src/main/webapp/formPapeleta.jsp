@@ -16,10 +16,10 @@
     }
 %>
 <%
-    String queryPersonas = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 FROM Personas p"
-            + " INNER JOIN Candidato c ON c.id_persona = p.id"
-            + " WHERE c.id_cargo = '%s' AND"
-            + " p.id NOT IN (SELECT id_candidato FROM PapeletaElectoral)";
+    String queryPersonas = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 FROM PERSONAS P"
+            + " INNER JOIN CANDIDATO C ON C.ID_PERSONA = P.ID"
+            + " WHERE C.ID_CARGO = '%s' AND"
+            + " P.ID NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
 %>
 
 <%
@@ -64,12 +64,11 @@
                     }
                 }
             }
+            db.desconectar();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //TODO
-        // redirect to page with preview of papeletaEleectoral
-
+        response.sendRedirect("papeletas.jsp");
     }
 %>
 <!DOCTYPE html>
@@ -88,7 +87,8 @@
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
         <div class="pt-3">
-            <input hidden type="text" name="tipo" value='<%=request.getParameter("tipo").toUpperCase()%>'/>
+            <input hidden type="text" name="tipo"
+                   value='<%=request.getParameter("tipo").toUpperCase()%>'/>
             <button type="submit" name="submit" class="btn btn-primary ">Crear Papeleta</button>
         </div>
     </form>
@@ -103,7 +103,7 @@
                 try {
                     Dba db = new Dba();
                     db.Conectar();
-                    db.query.execute("SELECT tipo FROM TipoPapeleta");
+                    db.query.execute("SELECT TIPO FROM TipoPapeleta");
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {
             %>

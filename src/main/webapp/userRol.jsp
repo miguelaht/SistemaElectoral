@@ -4,12 +4,11 @@
     Author     : miguelaht
 --%>
 <%@page import="database.Dba" %>
-<%@page import="java.sql.*" %>
 <%
     Dba db = new Dba();
     try {
         db.Conectar();
-        String query = String.format("UPDATE Usuario SET rol='%s' WHERE id_persona='%s'",
+        String query = String.format("UPDATE USUARIO SET ROL='%s' WHERE ID_PERSONA='%s'",
                 request.getParameter("rol_opt"), request.getParameter("id"));
         db.query.execute(query);
         db.desconectar();

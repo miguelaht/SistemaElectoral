@@ -18,10 +18,10 @@
 %>
 
 <%
-    String queryMiembros = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 "
-            + "FROM Personas p "
-            + "INNER JOIN Usuario u ON p.id = u.id_persona "
-            + "WHERE id NOT IN (SELECT id_persona FROM MesaPersona) AND u.rol = 'MM'";
+    String queryMiembros = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 "
+            + "FROM PERSONAS P "
+            + "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA "
+            + "WHERE ID NOT IN (SELECT ID_PERSONA FROM MESAPERSONA) AND U.ROL = 'MM'";
 %>
 
 <%
@@ -29,7 +29,7 @@
     if (request.getParameter("submit") != null) {
         try {
             Dba db = new Dba();
-            String query = String.format("INSERT INTO Ubicacion (departamento, municipio, latitud, longitud, descripcion) VALUES ('%s','%s',%s,%s,'%s')"
+            String query = String.format("INSERT INTO UBICACION (DEPARTAMENTO, MUNICIPIO, LATITUD, LONGITUD, DESCRIPCION) VALUES ('%s','%s',%s,%s,'%s')"
                     , request.getParameter("depto"), request.getParameter("muni"), request.getParameter("lat"), "-" + request.getParameter("lng"), request.getParameter("desc"));
 
 
@@ -45,7 +45,7 @@
             }
 
 
-            query = String.format("INSERT INTO Mesas (estado, ubicacion) VALUES ('%s', %s)",
+            query = String.format("INSERT INTO MESAS (ESTADO, UBICACION) VALUES ('%s', %s)",
                     request.getParameter("estado"), idUbicacion);
 
 
@@ -59,7 +59,7 @@
             String miembros[] = request.getParameterValues("id_p");
             if (miembros != null && miembros.length != 0) {
                 for (String id : miembros) {
-                    db.query.execute(String.format("INSERT INTO MesaPersona (id_mesa, id_persona) VALUES (%s, '%s')", idMesa, id));
+                    db.query.execute(String.format("INSERT INTO MESAPERSONA (ID_MESA, ID_PERSONA) VALUES (%s, '%s')", idMesa, id));
                 }
             }
             db.desconectar();

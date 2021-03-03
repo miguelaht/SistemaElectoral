@@ -4,9 +4,6 @@
     Author     : miguelaht
 --%>
 
-<%@page import="database.Dba" %>
-<%@page import="java.sql.*" %>
-<%@ page import="javax.xml.transform.Result" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <%
@@ -46,16 +43,6 @@
                 <a href="registro.jsp">o registrarse</a>
             </div>
         </div>
-        <%
-            Dba db = new Dba();
-            db.Conectar();
-            db.query.execute("SELECT * FROM DUAL");
-            ResultSet rs = db.query.getResultSet();
-            while(rs.next()){
-                out.print(rs.getString(1));
-            }
-            db.desconectar();
-        %>
     </div>
 </div>
 

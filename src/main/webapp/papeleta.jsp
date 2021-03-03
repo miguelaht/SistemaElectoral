@@ -15,12 +15,12 @@
 %>
 
 <%
-    String query = "SELECT pe.id_papeleta, pe.id_candidato, "
-            + "pr.nombre1 || ' ' || pr.nombre2 || ' ' || pr.apellido1 || ' ' || pr.apellido2, ca.foto "
-            + "FROM PapeletaElectoral pe "
-            + "INNER JOIN Candidato ca ON ca.id_persona = pe.id_candidato "
-            + "INNER JOIN Personas pr ON ca.id_persona = pr.id "
-            + "WHERE ca.id_cargo = '%s' AND ca.id_persona IN (SELECT id_candidato FROM PapeletaElectoral)";
+    String query = "SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO, "
+            + "PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO "
+            + "FROM PAPELETAELECTORAL PE "
+            + "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO "
+            + "INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID "
+            + "WHERE CA.ID_CARGO = '%s' AND CA.ID_PERSONA IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
 %>
 
 

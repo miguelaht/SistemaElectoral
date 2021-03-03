@@ -17,12 +17,12 @@
     }
 %>
 <%
-    String queryCandidatos = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 "
-            + "FROM Personas p "
-            + "INNER JOIN Candidato c On p.id = c.id_persona "
-            + "WHERE c.id_cargo='%s' AND c.id_partido='%s'";
-    String queryPersonas = "SELECT p.id, p.nombre1, p.nombre2, p.apellido1, p.apellido2 FROM Personas p"
-            + " WHERE p.id NOT IN (SELECT id_persona FROM Candidato)";
+    String queryCandidatos = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 "
+            + "FROM PERSONAS P "
+            + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
+            + "WHERE C.ID_CARGO='%s' AND C.ID_PARTIDO='%s'";
+    String queryPersonas = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 FROM PERSONAS P"
+            + " WHERE P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)";
 %>
 <html>
 <head>
@@ -45,7 +45,7 @@
                     try {
                         Dba db = new Dba();
                         db.Conectar();
-                        db.query.execute("SELECT nombre FROM Partido");
+                        db.query.execute("SELECT NOMBRE FROM Partido");
                         ResultSet rs = db.query.getResultSet();
                         while (rs.next()) {
                 %>
@@ -93,9 +93,9 @@
                     Dba db = new Dba();
                     db.Conectar();
                     president = db.query.executeUpdate(
-                            String.format("SELECT p.nombre1, p.nombre2, p.apellido1, p.apellido2, p.id, c.foto FROM Personas p "
-                                    + "INNER JOIN Candidato c On p.id = c.id_persona "
-                                    + "WHERE c.id_cargo='PRESIDENTE' AND c.id_partido='%s'", request.getParameter("party").toUpperCase()));
+                            String.format("SELECT P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2, P.ID, C.FOTO FROM PERSONAS P "
+                                    + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
+                                    + "WHERE C.ID_CARGO='PRESIDENTE' AND C.ID_PARTIDO='%S'", request.getParameter("party").toUpperCase()));
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {
         %>

@@ -39,8 +39,8 @@
                         try {
                             Dba db = new Dba();
                             db.Conectar();
-                            db.query.execute("SELECT p.id, p.nombre1 || ' ' || p.nombre2 || ' ' || p.apellido1|| ' ' ||  p.apellido2 FROM Personas p "
-                                    + "INNER JOIN Usuario u ON p.id = u.id_persona WHERE u.rol = 'EL' AND p.id NOT IN (SELECT id_persona FROM Candidato)");
+                            db.query.execute("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' || P.APELLIDO1|| ' ' ||  P.APELLIDO2 FROM PERSONAS P "
+                                    + "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA WHERE U.ROL = 'EL' AND P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)");
                             ResultSet rs = db.query.getResultSet();
                             while (rs.next()) {
                     %>
@@ -60,12 +60,11 @@
                 <label for="party" class="form-label">Partido Politico</label>
                 <select class="form-select" name="party" id="party">
                     <%
-                        // show every posible value of political party
 
                         try {
                             Dba db = new Dba();
                             db.Conectar();
-                            db.query.execute("SELECT nombre FROM PARTIDO");
+                            db.query.execute("SELECT NOMBRE FROM PARTIDO");
                             ResultSet rs = db.query.getResultSet();
                             while (rs.next()) {
                     %>
@@ -84,11 +83,10 @@
                 <label for="cargo" class="form-label">Cargo Electoral</label>
                 <select class="form-select" name="cargo" id="cargo">
                     <%
-                        // show every posible value of position in political party
                         try {
                             Dba db = new Dba();
                             db.Conectar();
-                            db.query.execute("SELECT nombre FROM CARGO");
+                            db.query.execute("SELECT NOMBRE FROM CARGO");
                             ResultSet rs = db.query.getResultSet();
                             while (rs.next()) {
                     %>

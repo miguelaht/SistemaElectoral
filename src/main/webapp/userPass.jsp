@@ -12,7 +12,7 @@
     Dba db = new Dba();
     try {
         db.Conectar();
-        db.query.execute(String.format("SELECT email FROM Personas WHERE id='%s'", request.getParameter("id")));
+        db.query.execute(String.format("SELECT EMAIL FROM PERSONAS WHERE ID='%s'", request.getParameter("id")));
         ResultSet rs = db.query.getResultSet();
         String mail = null;
         while (rs.next()) {
@@ -22,7 +22,7 @@
         Mail msg = new Mail();
         String code = msg.sendMail(mail, application.getRealPath("WEB-INF/") + "main.py");
 
-        String query = String.format("UPDATE Usuario SET password='%s', estado_p=1 WHERE id_persona='%s'", code, request.getParameter("id"));
+        String query = String.format("UPDATE USUARIO SET PASSWORD='%s', ESTADO_P=1 WHERE ID_PERSONA='%s'", code, request.getParameter("id"));
         db.query.execute(query);
         db.desconectar();
     } catch (Exception e) {

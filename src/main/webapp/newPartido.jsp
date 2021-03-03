@@ -57,7 +57,7 @@
         Dba db = new Dba();
         db.Conectar();
         System.out.println(fichero.getName());
-        String query = String.format("INSERT INTO Partido (nombre, descripcion, bandera) VALUES ('%s', '%s', '%s')",
+        String query = String.format("INSERT INTO PARTIDO (NOMBRE, DESCRIPCION, BANDERA) VALUES ('%s', '%s', '%s')",
                 nombre.toUpperCase(), descripcion, fichero.getName());
 
         db.query.execute(query);
