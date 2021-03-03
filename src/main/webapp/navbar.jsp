@@ -85,9 +85,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="formPapeleta.jsp">
+                        <a class="nav-link"
+                           href="papeletas.jsp">
                             <span data-feather="users"></span>
                             Papeletas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="formPapeleta.jsp">
+                            <span data-feather="users"></span>
+                            Crear Papeleta
                         </a>
                     </li>
                 </ul>

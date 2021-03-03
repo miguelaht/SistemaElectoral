@@ -82,9 +82,14 @@
     <h4>Nueva Mesa</h4>
     <div class="container-fluid pb-3">
         <form class="row g-1" action="newMesa.jsp" method="POST">
-            <jsp:include page="formMesa.jsp">
-                <jsp:param name="query" value="<%=queryMiembros%>"/>
-            </jsp:include>
+            <jsp:include page="formMesa.jsp"/>
+            <div class="col-md-12 pt-3">
+                <label class="form-label">Miembros de Mesa</label>
+                <jsp:include page='formList.jsp'>
+                    <jsp:param name="radio" value="hidden"/>
+                    <jsp:param name="query" value='<%=queryMiembros%>'/>
+                </jsp:include>
+            </div>
             <div class="pt-3 d-grid gap-2 col-6 mx-auto">
                 <input type="submit" class="btn btn-primary" class="form-control" name="submit" value="Registrar"
                        id="submit">

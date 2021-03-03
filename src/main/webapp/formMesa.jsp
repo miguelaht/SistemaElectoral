@@ -17,10 +17,9 @@
     }
 %>
 
-
 <div class="col-md-6">
     <label for="depto" class="form-label">Departamento</label>
-    <select id="depto" name="depto" class="form-control">
+    <select id="depto" name="depto" id="depto" class="form-control">
         <option>Seleccionar</option>
         <option>Atlantida</option>
         <option>Colon</option>
@@ -44,17 +43,18 @@
 </div>
 <div class="col-md-6">
     <label for="muni" class="form-label">Municipio</label>
-    <select id="muni" name="muni" class="form-control">
+    <select id="muni" name="muni" id="muni" class="form-control">
         <option>Seleccionar</option>
     </select>
 </div>
 <div class="col-md-6">
     <label for="desc" class="form-label">Descripcion de Ubicacion</label>
-    <textarea class="form-control" name="desc" autoComplete="off"></textarea>
+    <textarea class="form-control" id="desc" name="desc" autoComplete="off"></textarea>
 </div>
 <div class="col-md-6">
     <label for="estado" class="form-label">Estado de Mesa</label>
-    <input list="status" class="form-control" name="estado" autoComplete="off" placeholder="Seleccionar Estado">
+    <input list="status" id="estado" class="form-control" name="estado" autoComplete="off"
+           placeholder="Seleccionar Estado">
     <datalist id="status">
         <option value="1">Abierta</option>
         <option value="0">Cerrada</option>
@@ -68,15 +68,7 @@
     <label for="lng" class="form-label">Longitud</label>
     <input class="form-control" name="lng" id="lng" autoComplete="off" readonly>
 </div>
+<%--map--%>
 <div class="col-md-6 w-100 rounded shadow-lg border border-dark mt-2">
     <div style="height: 500px" id="map"></div>
 </div>
-<div class="col-md-12 pt-3">
-    <label for="cargo" class="form-label">Miembros de Mesa</label>
-    <jsp:include page='formList.jsp'>
-        <jsp:param name="radio" value="hidden"/>
-        <jsp:param name="query" value='<%=request.getParameter("query")%>'/>
-    </jsp:include>
-</div>
-
-

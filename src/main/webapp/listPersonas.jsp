@@ -96,88 +96,93 @@
     <div class="pt-3">
         <a href="newPersona.jsp" class="nav-link">Nuevo Registro</a>
     </div>
-    <table
-            id="table"
-            data-show-pagination-switch="true"
-            data-show-fullscreen="true"
-            data-detail-view="true"
-            data-toggle="table"
-            data-pagination="true"
-            data-search="true"
-            data-show-columns="true"
-            data-show-pagination-switch="true"
-            data-show-refresh="true"
-            data-key-events="true"
-            data-show-toggle="true"
-            data-resizable="true"
-            data-cookie="true"
-            data-cookie-id-table="saveId"
-            data-show-export="true"
-            data-click-to-select="true"
-            data-show-button-icons="true"
-            data-toolbar="#toolbar">
-        <thead>
-        <tr>
-            <th data-field="id">ID</th>
-            <th data-field="n1">Nombre</th>
-            <th data-field="rol">Rol</th>
-            <th data-field="us">Estado de Usuario</th>
-            <th data-field="pass">Password</th>
-            <th data-field="ps">Estado del Password</th>
-            <%if (session.getAttribute("s_rol").equals("AS")) {%>
-            <th>Mesa</th>
-            <%}%>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            // fetch personal and user data
-            try {
-                Dba db = new Dba();
-                db.Conectar();
-                db.query.execute(session.getAttribute("s_rol").equals("AS") ? queryAdmin : queryMiembro);
-                ResultSet rs = db.query.getResultSet();
-                while (rs.next()) {
-        %>
-        <tr>
-            <td><%=rs.getString(1)%>
-            </td>
-            <td><%=rs.getString(2)%>
-            </td>
-            <td><%=rs.getString(3) != null ? rs.getString(3) : ""%>
-            </td>
-            <td><%=rs.getString(4) != null ? "Activo" : "Inactivo"%>
-            </td>
-            <td><%=rs.getString(5) != null ? "Asignado" : "Pendiente"%>
-            </td>
-            <td><%=rs.getString(6) != null ? "Activo" : "Inactivo"%>
-            </td>
-            <%if (session.getAttribute("s_rol").equals("AS")) {%>
-            <td><%=rs.getString(7)%>
-            </td>
-            <%}%>
-            <td>
-                <button onclick="mod('<%=rs.getString(1)%>', '<%=rs.getString(2)%>',
-                        '<%=rs.getString(3)%>','<%=rs.getString(6)%>')" class="btn btn-sm btn-primary"
-                        data-toggle="modal" data-target="#exampleModalCenter"
-                >Informacion
-                </button>
-            </td>
-        </tr>
-        <%
+    <form method="POST">
+        <table
+                id="table"
+                data-show-fullscreen="true"
+                data-detail-view="true"
+                data-toggle="table"
+                data-pagination="true"
+                data-search="true"
+                data-show-columns="true"
+                data-show-pagination-switch="true"
+                data-show-refresh="true"
+                data-key-events="true"
+                data-show-toggle="true"
+                data-resizable="true"
+                data-cookie="true"
+                data-cookie-id-table="saveId"
+                data-show-export="true"
+                data-click-to-select="true"
+                data-show-button-icons="true"
+                data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th data-field="id">ID</th>
+                <th data-field="n1">Nombre</th>
+                <th data-field="rol">Rol</th>
+                <th data-field="us">Estado de Usuario</th>
+                <th data-field="pass">Password</th>
+                <th data-field="ps">Estado del Password</th>
+                <%if (session.getAttribute("s_rol").equals("AS")) {%>
+                <th>Mesa</th>
+                <%}%>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                // fetch personal and user data
+                try {
+                    Dba db = new Dba();
+                    db.Conectar();
+                    db.query.execute(session.getAttribute("s_rol").equals("AS") ? queryAdmin : queryMiembro);
+                    ResultSet rs = db.query.getResultSet();
+                    while (rs.next()) {
+            %>
+            <tr>
+                <td><%=rs.getString(1)%>
+                </td>
+                <td><%=rs.getString(2)%>
+                </td>
+                <td><%=rs.getString(3) != null ? rs.getString(3) : ""%>
+                </td>
+                <td><%=rs.getString(4) != null ? "Activo" : "Inactivo"%>
+                </td>
+                <td><%=rs.getString(5) != null ? "Asignado" : "Pendiente"%>
+                </td>
+                <td><%=rs.getString(6) != null ? "Activo" : "Inactivo"%>
+                </td>
+                <%if (session.getAttribute("s_rol").equals("AS")) {%>
+                <td><%=rs.getString(7)%>
+                </td>
+                <%}%>
+                <td>
+                    <button onclick="mod('<%=rs.getString(1)%>', '<%=rs.getString(2)%>',
+                            '<%=rs.getString(3)%>','<%=rs.getString(6)%>')"
+                            class="btn btn-sm btn-primary"
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                    >Informacion
+                    </button>
+                </td>
+            </tr>
+            <%
+                    }
+                    db.desconectar();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                db.desconectar();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        %>
-        </tbody>
-    </table>
+            %>
+            </tbody>
+        </table>
+    </form>
+
 </main>
 
 <!-- Actions Modal -->
-<div class="modal bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+<div class="modal bd-example-modal-lg" id="exampleModalCenter" tabindex="-1"
+     role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -196,7 +201,9 @@
                 <%}%>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Cerrar
+                </button>
             </div>
         </div>
     </div>

@@ -97,7 +97,7 @@
         <tr>
             <td><%=rs.getString(1)%>
             </td>
-            <td><%=rs.getString(2) == "1" ? "Abierta" : "Cerrada"%>
+            <td><%=rs.getString(2).equals("1") ? "Abierta" : "Cerrada"%>
             </td>
             <td><%=rs.getString(3)%>
             </td>
@@ -129,14 +129,16 @@
 </main>
 
 <jsp:include page="tableFooter.jsp"/>
-<script src='js/map.js'></script>
+<script type="text/javascript" src='js/map.js'></script>
 <script type="text/javascript">
-    <% try{
-        for(int i = 0 ; i < items.size(); i++){%>
-    addInfoBubble(map, "<%=items.get(i).get(0)%>", "<%=items.get(i).get(1)%>",
-        "<%=items.get(i).get(2)%>", "<%=items.get(i).get(3)%>", "<%=items.get(i).get(4)%>",
-        "<%=items.get(i).get(5)%>", "<%=items.get(i).get(6)%>", "<%=items.get(i).get(7)%>");
-    <%}
+    <%
+    try{
+        for(List item: items){%>
+    addInfoBubble(map, "<%=item.get(0)%>", "<%=item.get(1)%>",
+        "<%=item.get(2)%>", "<%=item.get(3)%>", "<%=item.get(4)%>",
+        "<%=item.get(5)%>", "<%=item.get(6)%>", "<%=item.get(7)%>");
+    <%
+        }
 }catch(Exception e){
 e.printStackTrace();
 }%>
