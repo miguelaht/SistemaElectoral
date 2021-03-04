@@ -30,17 +30,15 @@
     <div class="container-fluid">
         <form class="row g-1" action="newCandidato.jsp" method="POST" enctype="MULTIPART/FORM-DATA">
             <div class="col-md-6">
-                <label for="p_id" class="form-label">Numero de Identidad</label>
+                <label class="form-label">Numero de Identidad</label>
                 <input list="candidatos" class="form-control" name="p_id" autoComplete="off">
                 <datalist id="candidatos">
                     <%
-                        // show every posible value of political party
-
                         try {
                             Dba db = new Dba();
                             db.Conectar();
                             db.query.execute("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' || P.APELLIDO1|| ' ' ||  P.APELLIDO2 FROM PERSONAS P "
-                                    + "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA WHERE U.ROL = 'EL' AND P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)");
+                                             + "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA WHERE U.ROL = 'CA' AND P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)");
                             ResultSet rs = db.query.getResultSet();
                             while (rs.next()) {
                     %>

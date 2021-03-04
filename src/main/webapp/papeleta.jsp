@@ -15,15 +15,15 @@
 %>
 
 <%
-    String query = """
-            SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO,
-            PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO
-            FROM PAPELETAELECTORAL PE
-            INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO
-            INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID
-            INNER JOIN MESAPERSONA M on PR.ID = M.ID_PERSONA
-            WHERE CA.ID_CARGO = '%s' AND M.ID_MESA = %s AND CA.ID_PERSONA IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)
-            """;
+    String query = "SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO,\n" +
+                   "PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
+                   "FROM PAPELETAELECTORAL PE\n" +
+                   "INNER JOIN CANDIDATO CA on CA.ID_PERSONA = PE.ID_CANDIDATO\n" +
+                   "INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID\n" +
+                   "INNER JOIN MESAPAPELETA M on PE.ID_PAPELETA = M.ID_PAPELETA\n" +
+                   "INNER JOIN PAPELETA P on P.ID = PE.ID_PAPELETA\n" +
+                   "INNER JOIN TIPOPAPELETA T on T.ID = P.TIPO\n" +
+                   "WHERE T.TIPO='%s' AND M.ID_MESA=%s";
 %>
 
 
@@ -45,8 +45,19 @@
 
         <div class="px-auto"><%=rs.getString(3)%>
         </div>
-        <div class="form-check form-switch">
-            <input type="checkbox" class="form-check-input" name="voto_id"/>
+        <div class="row checkbox-row">
+            <div class="col-xs-2 col-xs-offset-4">
+                <div class="checkbox-inline">
+                    <% if (request.getParameter("tipo").equals("PRESIDENTE")) {%>
+                    <span><input type="radio" value="<%=rs.getString(2)%>" class="form-check-input"
+                                 name="voto_id"/></span>
+                    <%} else {%>
+                    <span><input type="checkbox" value="<%=rs.getString(2)%>"
+                                 class="form-check-input"
+                                 name="voto_id"/></span>
+                    <%}%>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -57,6 +68,10 @@
             e.printStackTrace();
         }
     %>
+</div>
+<div class="pt-3">
+    <button type="submit" name="submit" class="btn btn-sm btn-primary ">Confirmar
+    </button>
 </div>
 
 

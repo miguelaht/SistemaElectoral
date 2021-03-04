@@ -13,17 +13,15 @@
     try {
         db.Conectar();
         Connection con = db.getConexion();
-        try (PreparedStatement ps = con.prepareStatement("""
-                BEGIN
-                   INSERT INTO MESAPERSONA (ID_PERSONA, ID_MESA)
-                      VALUES(?, ?);
-                EXCEPTION
-                   WHEN DUP_VAL_ON_INDEX THEN
-                      UPDATE MESAPERSONA
-                      SET    ID_MESA = ?
-                      WHERE  ID_PERSONA = ?;
-                END;
-                """)) {
+        try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                         "   INSERT INTO MESAPERSONA (ID_PERSONA, ID_MESA)\n" +
+                                                         "      VALUES(?, ?);\n" +
+                                                         "EXCEPTION\n" +
+                                                         "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                         "      UPDATE MESAPERSONA\n" +
+                                                         "      SET    ID_MESA = ?\n" +
+                                                         "      WHERE  ID_PERSONA = ?;\n" +
+                                                         "END;\n")) {
             ps.setString(1, request.getParameter("id"));
             ps.setString(3, request.getParameter("id"));
             ps.setString(2, request.getParameter("mesa"));

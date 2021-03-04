@@ -18,7 +18,12 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h4><%=session.getAttribute("s_id")%></h4>
     <h4><%=session.getAttribute("s_rol")%></h4>
+    <h4><%=session.getAttribute("s_mesa")%></h4>
+    <h4><%=session.getAttribute("s_v1")%></h4>
+    <h4><%=session.getAttribute("s_v2")%></h4>
+    <h4><%=session.getAttribute("s_v3")%></h4>
 </main>
 </body>
 </html>

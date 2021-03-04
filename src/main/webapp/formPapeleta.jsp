@@ -68,7 +68,7 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("papeletas.jsp");
+        response.sendRedirect("listPapeletas.jsp");
     }
 %>
 <!DOCTYPE html>
