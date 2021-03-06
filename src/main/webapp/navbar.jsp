@@ -54,16 +54,40 @@
                 </ul>
 
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Administrar</span>
+                    <span>Personas</span>
                     <a class="link-secondary" href="#" aria-label="Add a new report">
                         <span data-feather="plus-circle"></span>
                     </a>
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="listPersonas.jsp">
+                        <a class="nav-link" href="newPersona.jsp">
                             <span data-feather="shopping-cart"></span>
-                            Personas
+                            Nuevo Registro
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp?r=EL">
+                            <span data-feather="shopping-cart"></span>
+                            Electores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp?r=CA">
+                            <span data-feather="shopping-cart"></span>
+                            Candidatos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp?r=MM">
+                            <span data-feather="shopping-cart"></span>
+                            Miembros de Mesa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp?r=MA">
+                            <span data-feather="shopping-cart"></span>
+                            Magistrados
                         </a>
                     </li>
                     <li class="nav-item">
@@ -72,18 +96,42 @@
                             Candidatos
                         </a>
                     </li>
+                </ul>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Partidos Politicos</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="listPartidos.jsp">
                             <span data-feather="shopping-cart"></span>
                             Partidos
                         </a>
                     </li>
+                </ul>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Mesas Electorales</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="listMesas.jsp">
                             <span data-feather="users"></span>
                             Mesas
                         </a>
                     </li>
+                </ul>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Papeletas Electorales</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link"
                            href="listPapeletas.jsp">

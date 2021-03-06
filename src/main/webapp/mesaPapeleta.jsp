@@ -10,7 +10,6 @@
 <%@ page import="java.sql.ResultSet" %>
 <table
         id="table"
-        data-detail-view="true"
         data-toggle="table"
         data-pagination="true"
         data-search="true"

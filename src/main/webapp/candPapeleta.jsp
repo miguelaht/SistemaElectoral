@@ -8,7 +8,6 @@
 --%>
 <table
         id="table"
-        data-detail-view="true"
         data-toggle="table"
         data-pagination="true"
         data-search="true"

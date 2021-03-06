@@ -7,13 +7,13 @@
 --%>
 
 <div class="row">
-    <div class="col-6 col-sm-4">
+    <div>
         <form name="userPassForm" action="userPass.jsp" method="POST" onsubmit="return userPass(this);">
             <button class="btn btn-link">Recuperar Password</button>
         </form>
     </div>
     <% if (session.getAttribute("s_rol").equals("AS")) {%>
-    <div class="col-6 col-sm-4">
+    <div >
         <button onclick="showForm('mesa-container')" class="btn btn-link">Asignar mesa de votacion
         </button>
         <div style="display: none;" id="mesa-container">
@@ -46,14 +46,14 @@
         </div>
     </div>
     <%}%>
-    <div class="col-6 col-sm-4">
+    <div>
         <form name="userStatusForm" action="userStatus.jsp" method="POST"
               onsubmit="return userStatus(this);">
             <button type="submit" name="activeUser" class="btn btn-link">Activar usuario</button>
         </form>
     </div>
     <% if (session.getAttribute("s_rol").equals("AS")) {%>
-    <div class="col-6 col-sm-4">
+    <div>
         <button onclick="showForm('rol-container')" class="btn btn-link">Actualizar rol</button>
         <div style="display: none;" id="rol-container">
             <form name="userRolForm" action="userRol.jsp" method="POST"

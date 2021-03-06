@@ -38,11 +38,9 @@
                 ResultSet rs = db.query.getResultSet();
 
                 if (rs.next()) {
-                    System.out.print("getInt" + rs.getInt(1));
                     idTipo = rs.getInt(1);
                 }
 
-                System.out.print("idtipo" + idTipo);
                 if (idTipo != 0) {
                     // create papeleta
                     String query = String.format("INSERT INTO Papeleta (tipo) VALUES (%s)", idTipo);

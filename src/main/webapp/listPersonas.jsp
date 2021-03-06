@@ -21,7 +21,7 @@
     String queryAdmin = "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
                         "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
                         "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
-                        "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID ";
+                        "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='%S'";
 
     // people on same table as miembro de mesa
     String queryMiembro = String.format(
@@ -91,14 +91,22 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h4>Personas</h4>
-    <div class="pt-3">
-        <a href="newPersona.jsp" class="nav-link">Nuevo Registro</a>
-    </div>
+    <%
+        if (request.getParameter("r") != null) {
+            if (request.getParameter("r").equals("EL")) {%>
+    <h4>Electores</h4>
+    <%} else if (request.getParameter("r").equals("MA")) {%>
+    <h4>Magistrados</h4>
+    <%} else if (request.getParameter("r").equals("MM")) {%>
+    <h4>Miembros de Mesa</h4>
+    <%} else if (request.getParameter("r").equals("CA")) {%>
+    <h4>Candidatos</h4>
+    <%
+            }
+        }%>
     <table
             id="table"
             data-show-fullscreen="true"
-            data-detail-view="true"
             data-toggle="table"
             data-pagination="true"
             data-search="true"
@@ -134,7 +142,8 @@
             try {
                 Dba db = new Dba();
                 db.Conectar();
-                db.query.execute(session.getAttribute("s_rol").equals("AS") ? queryAdmin : queryMiembro);
+                db.query.execute(session.getAttribute("s_rol").equals("AS") ?
+                        String.format(queryAdmin, request.getParameter("r")) : queryMiembro);
                 ResultSet rs = db.query.getResultSet();
                 while (rs.next()) {
         %>
@@ -158,10 +167,17 @@
             <td>
                 <button onclick="mod('<%=rs.getString(1)%>', '<%=rs.getString(2)%>',
                         '<%=rs.getString(3)%>','<%=rs.getString(6)%>')"
-                        class="btn btn-sm btn-primary"
+                        class="btn btn-sm btn-outline-info"
                         data-toggle="modal"
                         data-target="#exampleModalCenter"
-                >Informacion
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
                 </button>
             </td>
         </tr>

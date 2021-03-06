@@ -48,12 +48,12 @@
         <div class="row checkbox-row">
             <div class="col-xs-2 col-xs-offset-4">
                 <div class="checkbox-inline">
-                    <% if (request.getParameter("tipo").equals("PRESIDENTE")) {%>
-                    <span><input type="radio" value="<%=rs.getString(2)%>" class="form-check-input"
-                                 name="voto_id"/></span>
-                    <%} else {%>
+                    <% if (request.getParameter("tipo").equals("DIPUTADO")) {%>
                     <span><input type="checkbox" value="<%=rs.getString(2)%>"
                                  class="form-check-input"
+                                 name="voto_id"/></span>
+                    <%} else {%>
+                    <span><input type="radio" value="<%=rs.getString(2)%>" class="form-check-input"
                                  name="voto_id"/></span>
                     <%}%>
                 </div>

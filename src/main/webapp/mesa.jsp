@@ -19,10 +19,11 @@
 %>
 <%
     String queryMiembros = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 "
-            + "FROM PERSONAS P "
-            + "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA = P.ID "
-            + "INNER JOIN MESAS M ON MP.ID_MESA = M.ID "
-            + "WHERE M.ID=%s";
+                           + "FROM PERSONAS P "
+                           + "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA = P.ID "
+                           + "INNER JOIN MESAS M ON MP.ID_MESA = M.ID "
+                           + "INNER JOIN USUARIO U on P.ID = U.ID_PERSONA "
+                           + "WHERE M.ID=%s AND U.ROL = 'MM'";
 %>
 <%
     if (request.getParameter("submit") != null) {
@@ -56,12 +57,13 @@
     </h4>
     <form method="POST" action="mesa.jsp">
         <jsp:include page="formList.jsp">
-            <jsp:param name="query" value='<%=String.format(queryMiembros, request.getParameter("mID"))%>'/>
+            <jsp:param name="query"
+                       value='<%=String.format(queryMiembros, request.getParameter("mID"))%>'/>
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
         <div class="pt-3">
             <input hidden id="m_id" name="m_id" value='<%=request.getParameter("mID")%>'/>
-            <button type="submit" name="submit" class="btn btn-primary">Remover</button>
+            <button type="submit" name="submit" class="btn btn-sm btn-danger">Remover</button>
         </div>
     </form>
 </main>

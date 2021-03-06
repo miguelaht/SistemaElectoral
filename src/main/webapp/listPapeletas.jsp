@@ -29,7 +29,6 @@
             id="table"
             data-show-pagination-switch="true"
             data-show-fullscreen="true"
-            data-detail-view="true"
             data-toggle="table"
             data-pagination="true"
             data-search="true"
