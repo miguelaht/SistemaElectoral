@@ -19,87 +19,86 @@
 %>
 <%
     String query = "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
-                   "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA, CA.ID_PARTIDO, CA.ID_CARGO, CA.FOTO FROM PERSONAS P " +
+                   "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA, PA.NOMBRE, CA.ID_CARGO, CA.FOTO FROM PERSONAS P " +
                    "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
                    "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = P.ID " +
-                   "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='CA'";
+                   "LEFT JOIN PARTIDO PA ON CA.ID_PARTIDO = PA.ID " +
+                   "JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='CA'";
 %>
 <html>
-
 <head>
     <jsp:include page="head.jsp"/>
     <link rel="stylesheet" href="./css/foto.css">
+    <script>
+        function mod(id, n, r) {
+            $('#exampleModalCenter').on('show.bs.modal', function () {
+                const modal = $(this);
+                modal.find('#nombre').text(n);
+                modal.find('#rol').text(r);
+                document.getElementById('rol_p').value = r;
+                modal.find('#id').text(id);
+                document.getElementById('id_p').value = id;
+            });
+        }
+
+        function userStatus(form) {
+            const id = document.getElementById('id_p').value;
+            if (window.confirm('Activar usuario con ID=' + id + '?')) {
+                addHidden(form, 'id', id);
+                return true;
+            }
+            return false;
+        }
+
+        function addHidden(theForm, key, value) {
+            // Create a hidden input element, and append it to the form:
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key; // 'the key/name of the attribute/field that is sent to the server
+            input.value = value;
+            theForm.appendChild(input);
+        }
+
+        function showForm(id) {
+            const x = document.getElementById(id);
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function userPass(form) {
+            let id = document.getElementById('id_p').value;
+            addHidden(form, "id", id);
+            window.alert("El password sera reestablecido y enviado por email");
+        }
+
+        function addID(form) {
+            let id = document.getElementById('id_p').value;
+            addHidden(form, "id", id);
+        }
+
+        function showPicture(src) {
+            // Get the modal
+            const modal = document.getElementById("fotoModal");
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            const modalImg = document.getElementById("img01");
+
+            modal.style.display = "block";
+            modalImg.src = src
+
+            // Get the <span> element that closes the modal
+            const span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </head>
-<script>
-    function mod(id, n, r) {
-        $('#exampleModalCenter').on('show.bs.modal', function () {
-            const modal = $(this);
-            modal.find('#nombre').text(n);
-            modal.find('#rol').text(r);
-            document.getElementById('rol_p').value = r;
-            modal.find('#id').text(id);
-            document.getElementById('id_p').value = id;
-        });
-    }
-
-    function userStatus(form) {
-        const id = document.getElementById('id_p').value;
-        if (window.confirm('Activar usuario con ID=' + id + '?')) {
-            addHidden(form, 'id', id);
-            return true;
-        }
-        return false;
-    }
-
-    function addHidden(theForm, key, value) {
-        // Create a hidden input element, and append it to the form:
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key; // 'the key/name of the attribute/field that is sent to the server
-        input.value = value;
-        theForm.appendChild(input);
-    }
-
-    function showForm(id) {
-        const x = document.getElementById(id);
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-
-    function userPass(form) {
-        let id = document.getElementById('id_p').value;
-        addHidden(form, "id", id);
-        window.alert("El password sera reestablecido y enviado por email");
-    }
-
-    function addID(form) {
-        let id = document.getElementById('id_p').value;
-        addHidden(form, "id", id);
-    }
-
-    function showPicture(src) {
-        // Get the modal
-        const modal = document.getElementById("fotoModal");
-
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        const modalImg = document.getElementById("img01");
-
-        modal.style.display = "block";
-        modalImg.src = src
-
-        // Get the <span> element that closes the modal
-        const span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-    }
-</script>
-
 <body>
 <jsp:include page="navbar.jsp"/>
 <link rel="stylesheet" href="./css/foto.css">
@@ -187,7 +186,7 @@
                     </button>
                 </td>
                 <td>
-                    <a href="<%=rs.getString(1)%>">
+                    <a href="updPersona.jsp?id=<%=rs.getString(1)%>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                              fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

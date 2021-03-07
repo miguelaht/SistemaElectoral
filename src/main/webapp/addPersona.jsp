@@ -13,6 +13,8 @@
 <%@page import="java.io.*" %>
 <%@page import="java.util.*" %>
 <%@page import="org.apache.tomcat.util.http.fileupload.FileItem" %>
+<%@ page import="util.Mail" %>
+<%@ page import="util.CryptoHash" %>
 
 <%
     try {
@@ -67,27 +69,103 @@
         }
 //            archivo
 
+        // persona
         Dba db = new Dba();
         db.Conectar();
+        Connection con = db.getConexion();
+        try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                         "   INSERT INTO PERSONAS (ID, NOMBRE1, NOMBRE2, APELLIDO1, APELLIDO2, EMAIL, TELEFONO)\n" +
+                                                         "      VALUES(?, ?, ?, ?, ?, ?, ?);\n" +
+                                                         "EXCEPTION\n" +
+                                                         "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                         "      UPDATE PERSONAS\n" +
+                                                         "      SET    NOMBRE1= ?, NOMBRE2=?, APELLIDO1=?, APELLIDO2=?, EMAIL=?, TELEFONO=?\n" +
+                                                         "      WHERE  ID = ?;\n" +
+                                                         "END;\n")) {
 
-        // persona
-        db.query.execute(
-                String.format(
-                        "INSERT INTO PERSONAS (ID, NOMBRE1, NOMBRE2, APELLIDO1, APELLIDO2, EMAIL, TELEFONO) "
-                        + "VALUES ('%s', '%s','%s', '%s','%s', '%s','%s')",
-                        p_id, n1, n2, a1, a2, email, cel));
+            ps.setString(1, p_id);
+            ps.setString(14, p_id);
+            ps.setString(2, n1);
+            ps.setString(8, n1);
+            ps.setString(3, n2);
+            ps.setString(9, n2);
+            ps.setString(4, a1);
+            ps.setString(10, a1);
+            ps.setString(5, a2);
+            ps.setString(11, a2);
+            ps.setString(6, email);
+            ps.setString(12, email);
+            ps.setString(7, cel);
+            ps.setString(13, cel);
+
+            ps.execute();
+        }
+
+
         // usuario
-        db.query.execute(
-                String.format(
-                        "INSERT INTO USUARIO (ID_PERSONA, ESTADO_U, PASSWORD, ESTADO_P, ROL) "
-                        + "VALUES ('%s', 0, NULL, 0, '%s')", p_id, rol
-                )
-        );
+        String hash = null;
+        if (email != null && email.length() > 0) {
+            Mail inbox = new Mail();
+            String code = inbox.sendMail(email, application.getRealPath("WEB-INF/") + "main.py");
+            hash = code != null ? CryptoHash.getHash(code) : null;
+        }
+
+        try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                         "   INSERT INTO USUARIO (ID_PERSONA, PASSWORD, ESTADO_U, ROL, ESTADO_P)\n" +
+                                                         "      VALUES(?, ?, 0, ?, ?);\n" +
+                                                         "EXCEPTION\n" +
+                                                         "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                         "      NULL;\n" +
+                                                         "END;\n")) {
+
+            ps.setString(1, p_id);
+            ps.setString(2, hash);
+            ps.setString(3, rol);
+            ps.setInt(4, hash == null ? 0 : 1);
+            ps.execute();
+        }
 
         // candidato
         if (fichero != null) {
-            db.query.execute(String.format("INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO, FOTO) VALUES ('%s', '%s', '%s', '%s')"
-                    , p_id, cargo, party, fichero.getName()));
+            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                             "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO, FOTO)\n" +
+                                                             "      VALUES(?, ?, ?, ?);\n" +
+                                                             "EXCEPTION\n" +
+                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                             "      UPDATE CANDIDATO\n" +
+                                                             "      SET    ID_CARGO= ?, ID_PARTIDO=?, FOTO=?\n" +
+                                                             "      WHERE  ID_PERSONA = ?;\n" +
+                                                             "END;\n")) {
+
+                ps.setString(1, p_id);
+                ps.setString(2, cargo);
+                ps.setString(3, party);
+                ps.setString(4, fichero.getName());
+                ps.setString(5, cargo);
+                ps.setString(6, party);
+                ps.setString(7, fichero.getName());
+                ps.setString(8, p_id);
+                ps.execute();
+            }
+        } else {
+            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                             "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO)\n" +
+                                                             "      VALUES(?, ?, ?);\n" +
+                                                             "EXCEPTION\n" +
+                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                             "      UPDATE CANDIDATO\n" +
+                                                             "      SET    ID_CARGO= ?, ID_PARTIDO=?\n" +
+                                                             "      WHERE  ID_PERSONA = ?;\n" +
+                                                             "END;\n")) {
+
+                ps.setString(1, p_id);
+                ps.setString(2, cargo);
+                ps.setString(3, party);
+                ps.setString(4, cargo);
+                ps.setString(5, party);
+                ps.setString(6, p_id);
+                ps.execute();
+            }
         }
         db.desconectar();
 

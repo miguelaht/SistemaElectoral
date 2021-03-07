@@ -6,8 +6,7 @@
 
 <%@page import="database.Dba" %>
 <%@page import="java.sql.*" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+
 <div class="col-md-6">
     <label for="party" class="form-label">Partido Politico</label>
     <select class="form-select" name="party" id="party">
