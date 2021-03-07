@@ -12,24 +12,19 @@
 <%@page import="java.io.*" %>
 <%@page import="java.util.*" %>
 <%@page import="org.apache.tomcat.util.http.fileupload.FileItem" %>
+<%@ page import="org.junit.platform.commons.util.StringUtils" %>
 <%
     try {
-        String dir = "";
-        //clase para subir archivos a disco
-        //DiskFileUpload fu = new DiskFileUpload(); //hasta versi�n 6 de apache
         ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); //apache 7
 
-        //parceamos lo que viene en el request y lo clasificamos en �tems antes de apache 8.14
-        //List items = fu.parseRequest(request);
         List items = fu.parseRequest(new ServletRequestContext(request)); //apache 814 en adelante
 
         // Iteramos por cada elemento del Request
         Iterator i = items.iterator();
 
         String fileName = "";
-        String link = "";
         File fichero = null;
-        String nombre = null, descripcion = null;
+        String nombre = null, descripcion = null, id = null;
         while (i.hasNext()) {
             FileItem ff = (FileItem) i.next();
             //verificamos si el elemento es un archivo
@@ -48,16 +43,57 @@
                     nombre = ff.getString();
                 } else if (ff.getFieldName().compareTo("descripcion") == 0) {
                     descripcion = ff.getString();
+                } else if (ff.getFieldName().compareTo("id") == 0) {
+                    id = ff.getString();
                 }
             }
         }
 
         Dba db = new Dba();
         db.Conectar();
-        String query = String.format("INSERT INTO PARTIDO (NOMBRE, DESCRIPCION, BANDERA) VALUES ('%s', '%s', '%s')",
-                nombre.toUpperCase(), descripcion, fichero.getName());
+        Connection con = db.getConexion();
+        if (!StringUtils.isNotBlank(id)) {
+            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                             "   INSERT INTO PARTIDO (NOMBRE, DESCRIPCION, BANDERA)\n" +
+                                                             "      VALUES(?, ?, ?);\n" +
+                                                             "EXCEPTION\n" +
+                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                             "     NULL;\n" +
+                                                             "END;\n")) {
 
-        db.query.execute(query);
+                ps.setString(1, nombre);
+                ps.setString(2, descripcion);
+                ps.setString(3, fichero != null ? fichero.getName() : null);
+                ps.execute();
+            }
+        } else {
+            if (fichero != null) {
+                try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                                 "     UPDATE PARTIDO\n" +
+                                                                 "      SET    NOMBRE= ?, DESCRIPCION=?, BANDERA=?\n" +
+                                                                 "      WHERE  ID = ?;\n" +
+                                                                 "END;\n")) {
+
+                    ps.setString(1, nombre);
+                    ps.setString(2, descripcion);
+                    ps.setString(3, fichero.getName());
+                    ps.setInt(4, Integer.parseInt(id));
+                    ps.execute();
+                }
+            } else {
+                try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                                 "     UPDATE PARTIDO\n" +
+                                                                 "      SET    NOMBRE= ?, DESCRIPCION=?\n" +
+                                                                 "      WHERE  ID = ?;\n" +
+                                                                 "END;\n")) {
+
+                    ps.setString(1, nombre);
+                    ps.setString(2, descripcion);
+                    ps.setInt(3, Integer.parseInt(id));
+                    ps.execute();
+                }
+            }
+        }
 
         db.desconectar();
 

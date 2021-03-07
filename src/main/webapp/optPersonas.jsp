@@ -46,8 +46,7 @@
     <%}%>
     <div class="col">
         <button formaction="userStatus.jsp" type="submit" name="activeUser"
-                class="btn btn-link">Activar
-            usuario
+                class="btn btn-link">Activar usuario
         </button>
     </div>
 </div>

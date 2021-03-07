@@ -22,6 +22,6 @@
 
 </div>
 <div class="pt-3 d-grid gap-2 col-6 mx-auto">
-    <input type="submit" class="btn btn-primary" class="form-control" name="submit" value="Crear"
+    <input type="submit" class="btn btn-primary" name="submit" value="Submit"
            id="submit">
 </div>

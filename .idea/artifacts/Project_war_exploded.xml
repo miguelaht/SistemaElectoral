@@ -14,6 +14,7 @@
           <element id="module-output" name="Project" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.0" />
           <element id="library" level="project" name="Maven: com.oracle.database.jdbc:ojdbc8:21.1.0.0" />
           <element id="library" level="project" name="Maven: com.oracle.database.jdbc:ucp:21.1.0.0" />
           <element id="library" level="project" name="Maven: com.oracle.database.jdbc:rsi:21.1.0.0" />
@@ -29,6 +30,7 @@
           <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.0" />
           <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" />
           <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

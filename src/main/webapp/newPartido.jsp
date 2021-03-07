@@ -23,6 +23,7 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <h4>Nueva Partido</h4>
     <div class="container-fluid">
         <form class="row g-1" action="addPartido.jsp" method="POST" enctype="MULTIPART/FORM-DATA">
             <jsp:include page="formPartido.jsp"/>

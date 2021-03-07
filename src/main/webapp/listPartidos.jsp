@@ -65,23 +65,28 @@
 
     <%
         if (request.getParameter("party") != null) {%>
-<%--    <div class="container-fluid mx-auto">--%>
-<%--        <button class="btn btn-sm btn-primary"--%>
-<%--                data-toggle="modal" data-target="#exampleModalCenter1"--%>
-<%--        >Agregar presidente--%>
-<%--        </button>--%>
+    <%--    <div class="container-fluid mx-auto">--%>
+    <%--        <button class="btn btn-sm btn-primary"--%>
+    <%--                data-toggle="modal" data-target="#exampleModalCenter1"--%>
+    <%--        >Agregar presidente--%>
+    <%--        </button>--%>
 
-<%--        <button class="btn btn-sm btn-primary"--%>
-<%--                data-toggle="modal" data-target="#exampleModalCenter2"--%>
-<%--        >Agregar alcalde--%>
-<%--        </button>--%>
+    <%--        <button class="btn btn-sm btn-primary"--%>
+    <%--                data-toggle="modal" data-target="#exampleModalCenter2"--%>
+    <%--        >Agregar alcalde--%>
+    <%--        </button>--%>
 
-<%--        <button class="btn btn-sm btn-primary"--%>
-<%--                data-toggle="modal" data-target="#exampleModalCenter3"--%>
-<%--        >Agregar diputado--%>
-<%--        </button>--%>
-<%--    </div>--%>
-
+    <%--        <button class="btn btn-sm btn-primary"--%>
+    <%--                data-toggle="modal" data-target="#exampleModalCenter3"--%>
+    <%--        >Agregar diputado--%>
+    <%--        </button>--%>
+    <%--    </div>--%>
+    <form method="POST">
+        <button formaction='updPartido.jsp?id=<%=request.getParameter("party")%>' type="submit"
+                name="activeUser"
+                class="btn btn-link">Actualizar informacion
+        </button>
+    </form>
     <div class="pt-3">
         <%
             try {
