@@ -16,11 +16,11 @@
             try {
                 Dba db = new Dba();
                 db.Conectar();
-                db.query.execute("SELECT NOMBRE FROM PARTIDO");
+                db.query.execute("SELECT ID, NOMBRE FROM PARTIDO");
                 ResultSet rs = db.query.getResultSet();
                 while (rs.next()) {
         %>
-        <option value=<%=rs.getString(1)%>><%=rs.getString(1)%>
+        <option value=<%=rs.getString(1)%>><%=rs.getString(2)%>
         </option>
         <%
                 }

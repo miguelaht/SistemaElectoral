@@ -74,7 +74,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="listPersonas.jsp?r=CA">
+                        <a class="nav-link" href="listCandidatos.jsp">
                             <span data-feather="shopping-cart"></span>
                             Candidatos
                         </a>

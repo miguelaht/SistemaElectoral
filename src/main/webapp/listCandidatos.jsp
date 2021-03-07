@@ -1,9 +1,10 @@
 <%--
-    Document   : listPersonas
-    Created on : Feb 8, 2021, 6:19:01 PM
-    Author     : miguelaht
+  Created by IntelliJ IDEA.
+  User: miguelaht
+  Date: 7/3/21
+  Time: 07:18
+  To change this template use File | Settings | File Templates.
 --%>
-
 <%@page import="database.Dba" %>
 <%@page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -12,20 +13,22 @@
     if (session.getAttribute("s_id") == null) {
         response.sendRedirect("index.jsp");
     }
-    if (!(session.getAttribute("s_rol").equals("AS") || session.getAttribute("s_rol").equals("MM"))) {
+    if (!session.getAttribute("s_rol").equals("AS")) {
         response.sendRedirect("home.jsp");
     }
 %>
 <%
     String query = "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
-                   "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
+                   "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA, CA.ID_PARTIDO, CA.ID_CARGO, CA.FOTO FROM PERSONAS P " +
                    "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
-                   "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='%S'";
+                   "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = P.ID " +
+                   "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='CA'";
 %>
 <html>
 
 <head>
     <jsp:include page="head.jsp"/>
+    <link rel="stylesheet" href="./css/foto.css">
 </head>
 <script>
     function mod(id, n, r) {
@@ -76,25 +79,32 @@
         let id = document.getElementById('id_p').value;
         addHidden(form, "id", id);
     }
+
+    function showPicture(src) {
+        // Get the modal
+        const modal = document.getElementById("fotoModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        const modalImg = document.getElementById("img01");
+
+        modal.style.display = "block";
+        modalImg.src = src
+
+        // Get the <span> element that closes the modal
+        const span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    }
 </script>
 
 <body>
 <jsp:include page="navbar.jsp"/>
+<link rel="stylesheet" href="./css/foto.css">
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <%
-        if (request.getParameter("r") != null) {
-            if (request.getParameter("r").equals("EL")) {%>
-    <h4>Electores</h4>
-    <%} else if (request.getParameter("r").equals("MA")) {%>
-    <h4>Magistrados</h4>
-    <%} else if (request.getParameter("r").equals("MM")) {%>
-    <h4>Miembros de Mesa</h4>
-    <%} else if (request.getParameter("r").equals("AS")) {%>
-    <h4>Administradore</h4>
-    <%
-
-            }
-        }%>
+    <h4>Candidatos</h4>
     <form method="POST">
         <div class="container">
             <div class="row align-items-start">
@@ -122,15 +132,16 @@
             <thead>
             <tr>
                 <th>Seleccionar</th>
-                <th data-field="id">ID</th>
-                <th data-field="n1">Nombre</th>
-                <th data-field="rol">Rol</th>
-                <th data-field="us">Estado de Usuario</th>
-                <th data-field="pass">Password</th>
-                <th data-field="ps">Estado del Password</th>
-                <%if (session.getAttribute("s_rol").equals("AS")) {%>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Estado de Usuario</th>
+                <th>Password</th>
+                <th>Estado del Password</th>
                 <th>Mesa</th>
-                <%}%>
+                <th>Partido</th>
+                <th>Cargo</th>
+                <th>Fotografia</th>
                 <th>Opciones</th>
             </tr>
             </thead>
@@ -141,7 +152,7 @@
                     Dba db = new Dba();
                     db.Conectar();
 
-                    db.query.execute(String.format(query, request.getParameter("r")));
+                    db.query.execute(query);
 
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {
@@ -164,10 +175,17 @@
                 </td>
                 <td><%=rs.getInt(6) != 0 ? "Activo" : "Inactivo"%>
                 </td>
-                <%if (session.getAttribute("s_rol").equals("AS")) {%>
                 <td><%=rs.getString(7) != null ? rs.getString(7) : "P"%>
                 </td>
-                <%}%>
+                <td><%=rs.getString(8)%>
+                </td>
+                <td><%=rs.getString(9)%>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-link"
+                            onclick="showPicture('./media/<%=rs.getString(10)%>')">Ver
+                    </button>
+                </td>
                 <td>
                     <a href="<%=rs.getString(1)%>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -188,10 +206,17 @@
             %>
             </tbody>
         </table>
+
     </form>
 
 </main>
 
+<div id="fotoModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
+
 <jsp:include page="tableFooter.jsp"/>
 </body>
 </html>
+

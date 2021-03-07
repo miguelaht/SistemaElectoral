@@ -9,25 +9,30 @@
 <%@page import="database.Dba" %>
 <%@page import="java.sql.*" %>
 <%
-    Dba db = new Dba();
     try {
-        db.Conectar();
-        Connection con = db.getConexion();
-        try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
-                                                         "   INSERT INTO MESAPERSONA (ID_PERSONA, ID_MESA)\n" +
-                                                         "      VALUES(?, ?);\n" +
-                                                         "EXCEPTION\n" +
-                                                         "   WHEN DUP_VAL_ON_INDEX THEN\n" +
-                                                         "      UPDATE MESAPERSONA\n" +
-                                                         "      SET    ID_MESA = ?\n" +
-                                                         "      WHERE  ID_PERSONA = ?;\n" +
-                                                         "END;\n")) {
-            ps.setString(1, request.getParameter("id"));
-            ps.setString(3, request.getParameter("id"));
-            ps.setString(2, request.getParameter("mesa"));
-            ps.setString(4, request.getParameter("mesa"));
+        Dba db = new Dba();
+        String[] ids = request.getParameterValues("id");
+        if (ids != null && ids.length > 0) {
+            db.Conectar();
+            Connection con = db.getConexion();
+            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                             "   INSERT INTO MESAPERSONA (ID_PERSONA, ID_MESA)\n" +
+                                                             "      VALUES(?, ?);\n" +
+                                                             "EXCEPTION\n" +
+                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                             "      UPDATE MESAPERSONA\n" +
+                                                             "      SET    ID_MESA = ?\n" +
+                                                             "      WHERE  ID_PERSONA = ?;\n" +
+                                                             "END;\n")) {
+                for (String id : ids) {
+                    ps.setString(1, id);
+                    ps.setString(3, id);
+                    ps.setString(2, request.getParameter("mesa"));
+                    ps.setString(4, request.getParameter("mesa"));
 
-            ps.execute();
+                    ps.execute();
+                }
+            }
         }
         db.desconectar();
     } catch (Exception e) {
