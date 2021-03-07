@@ -17,16 +17,20 @@
 %>
 <!DOCTYPE html>
 <%
-    String candExists = "SELECT CA.ID_PARTIDO, PR.ID, PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
-                        "FROM PAPELETAELECTORAL PE\n" +
-                        "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO\n" +
-                        "INNER JOIN PERSONAS PR ON PR.ID = PE.ID_CANDIDATO\n" +
-                        "INNER JOIN PAPELETA PA ON PA.ID = PE.ID_PAPELETA\n" +
-                        "WHERE PA.ID = %s";
-    String candNotExists = "SELECT CA.ID_PARTIDO, PR.ID, PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
-                           "FROM CANDIDATO CA\n" +
-                           "INNER JOIN PERSONAS PR ON PR.ID = CA.ID_PERSONA\n" +
-                           "WHERE CA.ID_CARGO='%S' AND CA.ID_PERSONA NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
+    String candExists =
+            "SELECT P.NOMBRE, PR.ID, PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
+            "FROM PAPELETAELECTORAL PE\n" +
+            "INNER JOIN CANDIDATO CA ON CA.ID_PERSONA = PE.ID_CANDIDATO\n" +
+            "INNER JOIN PERSONAS PR ON PR.ID = PE.ID_CANDIDATO\n" +
+            "INNER JOIN PARTIDO P ON CA.ID_PARTIDO = P.ID\n" +
+            " JOIN PAPELETA PA ON PA.ID = PE.ID_PAPELETA\n" +
+            "WHERE PA.ID = %s";
+    String candNotExists =
+            "SELECT P.NOMBRE, PR.ID, PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
+            "FROM CANDIDATO CA\n" +
+            "INNER JOIN PERSONAS PR ON PR.ID = CA.ID_PERSONA\n" +
+            "INNER JOIN PARTIDO P ON CA.ID_PARTIDO = P.ID\n" +
+            "WHERE CA.ID_CARGO='%S' AND CA.ID_PERSONA NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
     String mesaExists = "SELECT M.ID, U.DEPARTAMENTO, U.MUNICIPIO\n" +
                         "FROM MESAS M\n" +
                         "INNER JOIN UBICACION U ON M.UBICACION = U.ID\n" +

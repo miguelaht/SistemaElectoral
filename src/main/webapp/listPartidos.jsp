@@ -6,6 +6,7 @@
 
 <%@page import="database.Dba" %>
 <%@page import="java.sql.*" %>
+<%@ page import="java.util.concurrent.ExecutionException" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <%
@@ -18,11 +19,11 @@
 %>
 <%
     String queryCandidatos = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 "
-            + "FROM PERSONAS P "
-            + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
-            + "WHERE C.ID_CARGO='%s' AND C.ID_PARTIDO='%s'";
+                             + "FROM PERSONAS P "
+                             + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
+                             + "WHERE C.ID_CARGO='%s' AND C.ID_PARTIDO='%s'";
     String queryPersonas = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 FROM PERSONAS P"
-            + " WHERE P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)";
+                           + " WHERE P.ID NOT IN (SELECT ID_PERSONA FROM CANDIDATO)";
 %>
 <html>
 <head>
@@ -45,11 +46,11 @@
                     try {
                         Dba db = new Dba();
                         db.Conectar();
-                        db.query.execute("SELECT NOMBRE FROM Partido");
+                        db.query.execute("SELECT ID,NOMBRE FROM Partido");
                         ResultSet rs = db.query.getResultSet();
                         while (rs.next()) {
                 %>
-                <option value="<%=rs.getString(1)%>"><%=rs.getString(1)%>
+                <option value="<%=rs.getString(1)%>"><%=rs.getString(2)%>
                 </option>
                 <%
                         }
@@ -64,23 +65,42 @@
 
     <%
         if (request.getParameter("party") != null) {%>
-    <div class="container-fluid mx-auto">
-        <button class="btn btn-sm btn-primary"
-                data-toggle="modal" data-target="#exampleModalCenter1"
-        >Agregar presidente
-        </button>
+<%--    <div class="container-fluid mx-auto">--%>
+<%--        <button class="btn btn-sm btn-primary"--%>
+<%--                data-toggle="modal" data-target="#exampleModalCenter1"--%>
+<%--        >Agregar presidente--%>
+<%--        </button>--%>
 
-        <button class="btn btn-sm btn-primary"
-                data-toggle="modal" data-target="#exampleModalCenter2"
-        >Agregar alcalde
-        </button>
+<%--        <button class="btn btn-sm btn-primary"--%>
+<%--                data-toggle="modal" data-target="#exampleModalCenter2"--%>
+<%--        >Agregar alcalde--%>
+<%--        </button>--%>
 
-        <button class="btn btn-sm btn-primary"
-                data-toggle="modal" data-target="#exampleModalCenter3"
-        >Agregar diputado
-        </button>
+<%--        <button class="btn btn-sm btn-primary"--%>
+<%--                data-toggle="modal" data-target="#exampleModalCenter3"--%>
+<%--        >Agregar diputado--%>
+<%--        </button>--%>
+<%--    </div>--%>
+
+    <div class="pt-3">
+        <%
+            try {
+                Dba db = new Dba();
+                db.Conectar();
+                db.query.execute("SELECT BANDERA FROM PARTIDO WHERE ID=" +
+                                 request.getParameter("party"));
+                ResultSet rs = db.query.getResultSet();
+                while (rs.next()) {%>
+
+        <img src="./media/<%=rs.getString(1)%>" class="img-fluid mx-auto d-block">
+        <%
+                }
+                db.desconectar();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
     </div>
-
 
     <div class="mt-3">
         <h5>Presidente</h5>
@@ -94,15 +114,12 @@
                     db.Conectar();
                     president = db.query.executeUpdate(
                             String.format("SELECT P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2, P.ID, C.FOTO FROM PERSONAS P "
-                                    + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
-                                    + "WHERE C.ID_CARGO='PRESIDENTE' AND C.ID_PARTIDO='%S'", request.getParameter("party").toUpperCase()));
+                                          + "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA "
+                                          + "WHERE C.ID_CARGO='PRESIDENTE' AND C.ID_PARTIDO='%s'", request.getParameter("party")));
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {
         %>
         <div class="d-flex flex-column fs-6 fw-normal">
-            <div>
-                <img src="<%="./media/"+rs.getString(6)%>" class="img-thumbnail">
-            </div>
             <div class="p-2 fs-6">
                 Nombre: <%=rs.getString(1) != null ? rs.getString(1) : ""%> <%=rs.getString(2) != null ? rs.getString(2) : ""%>
                 <%=rs.getString(3) != null ? rs.getString(3) : ""%> <%=rs.getString(4) != null ? rs.getString(4) : ""%>

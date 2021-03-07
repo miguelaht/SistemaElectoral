@@ -101,7 +101,10 @@
     <h4>Miembros de Mesa</h4>
     <%} else if (request.getParameter("r").equals("CA")) {%>
     <h4>Candidatos</h4>
+    <%} else if (request.getParameter("r").equals("AS")) {%>
+    <h4>Administradore</h4>
     <%
+
             }
         }%>
     <table

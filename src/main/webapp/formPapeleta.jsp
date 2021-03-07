@@ -17,9 +17,9 @@
 %>
 <%
     String queryPersonas = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 FROM PERSONAS P"
-            + " INNER JOIN CANDIDATO C ON C.ID_PERSONA = P.ID"
-            + " WHERE C.ID_CARGO = '%s' AND"
-            + " P.ID NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
+                           + " INNER JOIN CANDIDATO C ON C.ID_PERSONA = P.ID"
+                           + " WHERE C.ID_CARGO = '%s' AND"
+                           + " P.ID NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
 %>
 
 <%
@@ -57,7 +57,7 @@
                     for (String id : candidatos) {
                         db.query.execute(String.format(
                                 "INSERT INTO PapeletaElectoral (id_candidato, id_papeleta) VALUES "
-                                        + "('%s', %s)",
+                                + "('%s', %s)",
                                 id, idPapeleta));
                     }
                 }
@@ -75,18 +75,36 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <%if (request.getParameter("tipo") != null && (request.getParameter("tipo").equals("PRESIDENTE") || request.getParameter("tipo").equals("ALCALDE") || request.getParameter("tipo").equals("DIPUTADO"))) {%>
-    <h4>Nueva Papeleta <%=request.getParameter("tipo")%>
+    <%
+        String partido = null;
+        try {
+            Dba db = new Dba();
+            db.query.execute(String.format("SELECT NOMBRE FROM PARTIDO WHERE ID=%s", request.getParameter("tipo")));
+            ResultSet rs = db.query.getResultSet();
+            while (rs.next()) {
+                partido = rs.getString(1);
+                break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    %>
+    <%
+        if (partido != null &&
+            (partido.equals("PRESIDENTE") ||
+             partido.equals("ALCALDE") || partido.equals("DIPUTADO"))) {
+    %>
+    <h4>Nueva Papeleta <%=partido%>
     </h4>
     <form action="formPapeleta.jsp" method="POST">
         <jsp:include page='formList.jsp'>
             <jsp:param name="query"
-                       value='<%=String.format(queryPersonas, request.getParameter("tipo").toUpperCase())%>'/>
+                       value='<%=String.format(queryPersonas, request.getParameter("tipo"))%>'/>
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
         <div class="pt-3">
             <input hidden type="text" name="tipo"
-                   value='<%=request.getParameter("tipo").toUpperCase()%>'/>
+                   value='<%=request.getParameter("tipo")%>'/>
             <button type="submit" name="submit" class="btn btn-primary ">Crear Papeleta</button>
         </div>
     </form>

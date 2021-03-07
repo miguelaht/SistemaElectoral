@@ -9,8 +9,9 @@
 
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="home.jsp">Elecciones</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="home.jsp">Elecciones 2077</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
+            data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,12 +46,6 @@
                             Papeleta Diputados
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="bar-chart-2"></span>
-                            Dashboard
-                        </a>
-                    </li>
                 </ul>
 
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -73,6 +68,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="listPersonas.jsp?r=AS">
+                            <span data-feather="shopping-cart"></span>
+                            Administradores
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="listPersonas.jsp?r=CA">
                             <span data-feather="shopping-cart"></span>
                             Candidatos
@@ -90,20 +91,20 @@
                             Magistrados
                         </a>
                     </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Partidos Politicos</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="formCandidatos.jsp">
-                            <span data-feather="file"></span>
-                            Candidatos
+                        <a class="nav-link" href="newPartido.jsp">
+                            <span data-feather="shopping-cart"></span>
+                            Nuevo Partido
                         </a>
                     </li>
-                </ul>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Partidos Politicos</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="listPartidos.jsp">
                             <span data-feather="shopping-cart"></span>
@@ -111,13 +112,19 @@
                         </a>
                     </li>
                 </ul>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Mesas Electorales</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Mesas Electorales</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
                 <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="newMesas.jsp">
+                            <span data-feather="users"></span>
+                            Nueva Mesa
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="listMesas.jsp">
                             <span data-feather="users"></span>
@@ -125,24 +132,24 @@
                         </a>
                     </li>
                 </ul>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Papeletas Electorales</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Papeletas Electorales</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
                 <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="formPapeleta.jsp">
+                            <span data-feather="users"></span>
+                            Nueva Papeleta
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link"
                            href="listPapeletas.jsp">
                             <span data-feather="users"></span>
                             Papeletas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="formPapeleta.jsp">
-                            <span data-feather="users"></span>
-                            Crear Papeleta
                         </a>
                     </li>
                 </ul>
