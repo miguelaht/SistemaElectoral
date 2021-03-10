@@ -7,9 +7,17 @@
 --%>
 
 <div class="row">
+    <% if (session.getAttribute("s_rol").equals("AS") ||
+           session.getAttribute("s_rol").equals("MM")) {%>
+    <div class="col">
+        <button formaction="userStatus.jsp" type="submit" name="activeUser"
+                class="btn btn-link">Activar usuario
+        </button>
+    </div>
     <div class="col">
         <button formaction="userPass.jsp" class="btn btn-link">Recuperar Password</button>
     </div>
+    <%}%>
     <% if (session.getAttribute("s_rol").equals("AS")) {%>
     <div class="col">
         <button type="button" onclick="showForm('mesa-container')" class="btn btn-link">Asignar
@@ -44,9 +52,4 @@
         </div>
     </div>
     <%}%>
-    <div class="col">
-        <button formaction="userStatus.jsp" type="submit" name="activeUser"
-                class="btn btn-link">Activar usuario
-        </button>
-    </div>
 </div>

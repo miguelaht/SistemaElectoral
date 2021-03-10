@@ -15,12 +15,22 @@
     if (!(session.getAttribute("s_rol").equals("AS") || session.getAttribute("s_rol").equals("MM"))) {
         response.sendRedirect("home.jsp");
     }
+    if (session.getAttribute("s_rol").equals("MM") && !request.getParameter("r").equals("EL")) {
+        response.sendRedirect("listPersonas.jsp?r=EL");
+    }
 %>
 <%
-    String query = "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
-                   "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
-                   "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
-                   "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='%S'";
+    String queryAS =
+            "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
+            "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
+            "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
+            "LEFT JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='%S'";
+    String queryMM =
+            "SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, U.ROL, " +
+            "U.ESTADO_U, U.PASSWORD, U.ESTADO_P, M.ID_MESA FROM PERSONAS P " +
+            "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
+            "INNER JOIN MESAPERSONA M on P.ID = M.ID_PERSONA " +
+            "JOIN MESAPERSONA M ON M.ID_PERSONA = P.ID WHERE ROL='%S' AND M.ID_MESA =" + session.getAttribute("s_mesa");
 %>
 <html>
 
@@ -90,7 +100,7 @@
     <%} else if (request.getParameter("r").equals("MM")) {%>
     <h4>Miembros de Mesa</h4>
     <%} else if (request.getParameter("r").equals("AS")) {%>
-    <h4>Administradore</h4>
+    <h4>Administradores</h4>
     <%
 
             }
@@ -141,7 +151,12 @@
                     Dba db = new Dba();
                     db.Conectar();
 
-                    db.query.execute(String.format(query, request.getParameter("r")));
+                    if (session.getAttribute("s_rol").equals("AS")) {
+                        db.query.execute(String.format(queryAS, request.getParameter("r")));
+                    } else if (session.getAttribute("s_rol").equals("MM") &&
+                               request.getParameter("r").equals("EL")) {
+                        db.query.execute(String.format(queryMM, request.getParameter("r")));
+                    }
 
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {

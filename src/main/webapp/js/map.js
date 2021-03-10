@@ -15,6 +15,14 @@ function addMarkerToGroup(group, coordinate, html) {
  * Add two markers showing the position of Liverpool and Manchester City football clubs.
  * Clicking on a marker opens an infobubble which holds HTML content related to the marker.
  * @param  {H.Map} map      A HERE Map instance within the application
+ * @param id
+ * @param estado
+ * @param depto
+ * @param muni
+ * @param lat
+ * @param lng
+ * @param desc
+ * @param votantes
  */
 function addInfoBubble(map, id, estado, depto, muni, lat, lng, desc, votantes) {
     const group = new H.map.Group();
@@ -30,11 +38,17 @@ function addInfoBubble(map, id, estado, depto, muni, lat, lng, desc, votantes) {
         // show info bubble
         ui.addBubble(bubble);
     }, false);
-    str = '<div><b>ID</b> ' + id + '</div>';
-    str += '<div><b>Estado</b> ' + estado == 1 ? 'Abierta' : 'Cerrada' + '</div>';
-    str += '<div><b>Departamento</b> ' + depto + '</div>';
-    str += '<div><b>Municipio</b> ' + muni + '</div>';
-    str += '<div><b>Votantes</b> ' + votantes + '</div>';
+    let str = ""
+    if (id != null)
+        str = '<div><b>ID</b> ' + id + '</div>';
+    if (estado != null)
+        str += "<div><b>Estado</b> " + (estado == 1 ? "Abierta" : "Cerrada") + "</div>";
+    if (depto != null)
+        str += '<div><b>Departamento</b> ' + depto + '</div>';
+    if (muni != null)
+        str += '<div><b>Municipio</b> ' + muni + '</div>';
+    if (votantes != null)
+        str += '<div><b>Votantes</b> ' + votantes + '</div>';
     addMarkerToGroup(group, {lat, lng}, str);
 }
 
@@ -49,10 +63,10 @@ function setUpClickListener(map) {
 // obtain the coordinates and display in an alert box.
     map.addEventListener('tap', function (evt) {
         const coord = map.screenToGeo(evt.currentPointer.viewportX,
-                evt.currentPointer.viewportY);
+            evt.currentPointer.viewportY);
         logEvent(
-                Math.abs(coord.lat.toFixed(4)),
-                Math.abs(coord.lng.toFixed(4)));
+            Math.abs(coord.lat.toFixed(4)),
+            Math.abs(coord.lng.toFixed(4)));
         //Math.abs(coord.lat.toFixed(4)) + ((coord.lat > 0) ? 'N' : 'S'),
         //Math.abs(coord.lng.toFixed(4)) + ((coord.lng > 0) ? 'E' : 'W'));
     });
@@ -77,11 +91,11 @@ const platform = new H.service.Platform({
 const defaultLayers = platform.createDefaultLayers();
 // initialize a map - this map is centered over Europe
 const map = new H.Map(document.getElementById('map'),
-        defaultLayers.vector.normal.map, {
-            center: {lat: 14.8689, lng: -86.93},
-            zoom: 7,
-            pixelRatio: window.devicePixelRatio || 1
-        });
+    defaultLayers.vector.normal.map, {
+        center: {lat: 14.8689, lng: -86.93},
+        zoom: 7,
+        pixelRatio: window.devicePixelRatio || 1
+    });
 // add a resize listener to make sure that the map occupies the whole container
 window.addEventListener('resize', () => map.getViewPort().resize());
 // MapEvents enables the event system

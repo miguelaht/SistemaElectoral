@@ -31,19 +31,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="votar.jsp?tipo=PRESIDENTE">
                             <span data-feather="home"></span>
-                            Papeleta Presidentes
+                            Votar Presidentes
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="votar.jsp?tipo=ALCALDE">
                             <span data-feather="file"></span>
-                            Papeleta Alcaldes
+                            Votar Alcaldes
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="votar.jsp?tipo=DIPUTADO">
                             <span data-feather="shopping-cart"></span>
-                            Papeleta Diputados
+                            Votar Diputados
                         </a>
                     </li>
                 </ul>
@@ -55,18 +55,21 @@
                     </a>
                 </h6>
                 <ul class="nav flex-column">
+                    <% if (session.getAttribute("s_rol").equals("AS")) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="newPersona.jsp">
                             <span data-feather="shopping-cart"></span>
                             Nuevo Registro
                         </a>
                     </li>
+                    <%}%>
                     <li class="nav-item">
                         <a class="nav-link" href="listPersonas.jsp?r=EL">
                             <span data-feather="shopping-cart"></span>
                             Electores
                         </a>
                     </li>
+                    <% if (session.getAttribute("s_rol").equals("AS")) {%>
                     <li class="nav-item">
                         <a class="nav-link" href="listPersonas.jsp?r=AS">
                             <span data-feather="shopping-cart"></span>
@@ -92,6 +95,8 @@
                         </a>
                     </li>
                 </ul>
+                <%}%>
+                <% if (session.getAttribute("s_rol").equals("AS")) {%>
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>Partidos Politicos</span>
                     <a class="link-secondary" href="#" aria-label="Add a new report">
@@ -133,30 +138,44 @@
                     </li>
                 </ul>
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Papeletas Electorales</span>
-                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                    <span>papeletas electorales</span>
+                    <a class="link-secondary" href="#" aria-label="add a new report">
                         <span data-feather="plus-circle"></span>
                     </a>
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="formPapeleta.jsp">
+                        <a class="nav-link" href="formpapeleta.jsp">
                             <span data-feather="users"></span>
-                            Nueva Papeleta
+                            nueva papeleta
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="listPapeletas.jsp">
+                           href="listpapeletas.jsp">
                             <span data-feather="users"></span>
-                            Papeletas
+                            papeletas
                         </a>
                     </li>
                 </ul>
+                <%}%>
+                <% if (session.getAttribute("s_rol").equals("MM")) {%>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Reportes</span>
+                    <a class="link-secondary" href="#" aria-label="add a new report">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="votantesPDF.jsp">
+                            <span data-feather="users"></span>
+                            Votantes
+                        </a>
+                    </li>
+                </ul>
+                <%}%>
             </div>
-
         </nav>
-
     </div>
-
 </div>

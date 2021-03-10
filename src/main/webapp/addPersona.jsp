@@ -115,56 +115,59 @@
                                                          "      VALUES(?, ?, 0, ?, ?);\n" +
                                                          "EXCEPTION\n" +
                                                          "   WHEN DUP_VAL_ON_INDEX THEN\n" +
-                                                         "      NULL;\n" +
+                                                         "      UPDATE USUARIO SET ROL=? WHERE ID_PERSONA=?;\n" +
                                                          "END;\n")) {
-
             ps.setString(1, p_id);
             ps.setString(2, hash);
             ps.setString(3, rol);
             ps.setInt(4, hash == null ? 0 : 1);
+            ps.setString(5, rol);
+            ps.setString(6, p_id);
             ps.execute();
         }
 
         // candidato
-        if (fichero != null) {
-            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
-                                                             "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO, FOTO)\n" +
-                                                             "      VALUES(?, ?, ?, ?);\n" +
-                                                             "EXCEPTION\n" +
-                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
-                                                             "      UPDATE CANDIDATO\n" +
-                                                             "      SET    ID_CARGO= ?, ID_PARTIDO=?, FOTO=?\n" +
-                                                             "      WHERE  ID_PERSONA = ?;\n" +
-                                                             "END;\n")) {
+        if (cargo != null && party != null && rol.equals("CA")) {
+            if (fichero != null) {
+                try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                                 "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO, FOTO)\n" +
+                                                                 "      VALUES(?, ?, ?, ?);\n" +
+                                                                 "EXCEPTION\n" +
+                                                                 "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                                 "      UPDATE CANDIDATO\n" +
+                                                                 "      SET    ID_CARGO= ?, ID_PARTIDO=?, FOTO=?\n" +
+                                                                 "      WHERE  ID_PERSONA = ?;\n" +
+                                                                 "END;\n")) {
 
-                ps.setString(1, p_id);
-                ps.setString(2, cargo);
-                ps.setString(3, party);
-                ps.setString(4, fichero.getName());
-                ps.setString(5, cargo);
-                ps.setString(6, party);
-                ps.setString(7, fichero.getName());
-                ps.setString(8, p_id);
-                ps.execute();
-            }
-        } else {
-            try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
-                                                             "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO)\n" +
-                                                             "      VALUES(?, ?, ?);\n" +
-                                                             "EXCEPTION\n" +
-                                                             "   WHEN DUP_VAL_ON_INDEX THEN\n" +
-                                                             "      UPDATE CANDIDATO\n" +
-                                                             "      SET    ID_CARGO= ?, ID_PARTIDO=?\n" +
-                                                             "      WHERE  ID_PERSONA = ?;\n" +
-                                                             "END;\n")) {
+                    ps.setString(1, p_id);
+                    ps.setString(2, cargo);
+                    ps.setString(3, party);
+                    ps.setString(4, fichero.getName());
+                    ps.setString(5, cargo);
+                    ps.setString(6, party);
+                    ps.setString(7, fichero.getName());
+                    ps.setString(8, p_id);
+                    ps.execute();
+                }
+            } else {
+                try (PreparedStatement ps = con.prepareStatement("BEGIN\n" +
+                                                                 "   INSERT INTO CANDIDATO (ID_PERSONA, ID_CARGO, ID_PARTIDO)\n" +
+                                                                 "      VALUES(?, ?, ?);\n" +
+                                                                 "EXCEPTION\n" +
+                                                                 "   WHEN DUP_VAL_ON_INDEX THEN\n" +
+                                                                 "      UPDATE CANDIDATO\n" +
+                                                                 "      SET    ID_CARGO= ?, ID_PARTIDO=?\n" +
+                                                                 "      WHERE  ID_PERSONA = ?;\n" +
+                                                                 "END;\n")) {
 
-                ps.setString(1, p_id);
-                ps.setString(2, cargo);
-                ps.setString(3, party);
-                ps.setString(4, cargo);
-                ps.setString(5, party);
-                ps.setString(6, p_id);
-                ps.execute();
+                    ps.setString(1, p_id);
+                    ps.setString(2, cargo);
+                    ps.setString(3, party);
+                    ps.setString(4, cargo);
+                    ps.setString(5, party);
+                    ps.setString(6, p_id);
+                    ps.execute();
+                }
             }
         }
         db.desconectar();

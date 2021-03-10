@@ -14,6 +14,9 @@
           <element id="module-output" name="Project" />
         </element>
         <element id="directory" name="lib">
+          <element id="archive" name="Project-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="Project" />
+          </element>
           <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.0" />
           <element id="library" level="project" name="Maven: com.oracle.database.jdbc:ojdbc8:21.1.0.0" />
           <element id="library" level="project" name="Maven: com.oracle.database.jdbc:ucp:21.1.0.0" />
@@ -31,6 +34,12 @@
           <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" />
           <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
           <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" />
+          <element id="library" level="project" name="Maven: com.lowagie:itext:2.1.7" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcmail-jdk14:138" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcprov-jdk14:138" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" />
         </element>
       </element>
       <element id="directory" name="META-INF">
