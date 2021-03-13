@@ -28,6 +28,12 @@
 <html>
 <head>
     <jsp:include page="head.jsp"/>
+    <script>
+        function setValue(name) {
+            if (name != 'null')
+                document.getElementById("party").value = name;
+        }
+    </script>
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
@@ -95,10 +101,18 @@
                 db.query.execute("SELECT BANDERA FROM PARTIDO WHERE ID=" +
                                  request.getParameter("party"));
                 ResultSet rs = db.query.getResultSet();
-                while (rs.next()) {%>
+                if (rs.next()) {
+                    if (rs.getString(1) != null) {
+        %>
 
-        <img src="./media/<%=rs.getString(1)%>" class="img-fluid mx-auto d-block">
+        <img src="./media/<%=rs.getString(1)%>" alt="<%=rs.getString(1)%>"
+             class="img-fluid mx-auto d-block">
         <%
+        } else {
+        %>
+        <span class="text-muted text-center">Agregar fotografia de bandera de partido</span>
+        <%
+                    }
                 }
                 db.desconectar();
             } catch (Exception e) {
@@ -143,7 +157,7 @@
         %>
     </div>
 
-    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
+<%--    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">--%>
         <h4>Alcaldes</h4>
         <jsp:include page="formList.jsp">
             <jsp:param name="query" value='<%=String.format(
@@ -151,10 +165,10 @@
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
 
-        <input class="btn btn-sm btn-danger" type="submit" name="submit" value="Remover Alcalde"/>
-    </form>
+<%--        <input class="btn btn-sm btn-danger" type="submit" name="submit" value="Remover Alcalde"/>--%>
+<%--    </form>--%>
 
-    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">
+<%--    <form action="optCandidato.jsp" method="POST" onsubmit="return confirm('Confirmar accion')">--%>
         <h4>Diputados</h4>
         <jsp:include page="formList.jsp">
             <jsp:param name="query" value='<%=String.format(
@@ -162,8 +176,8 @@
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
 
-        <input class="btn btn-sm btn-danger" type="submit" name="submit" value="Remover Diputados"/>
-    </form>
+<%--        <input class="btn btn-sm btn-danger" type="submit" name="submit" value="Remover Diputados"/>--%>
+<%--    </form>--%>
 
     <!--modal to add candidates-->
     <%if (president == 0) {%>
@@ -196,7 +210,9 @@
         }
     %>
 </main>
-
 <jsp:include page="tableFooter.jsp"/>
+<script>
+    setValue('<%=request.getParameter("party")%>')
+</script>
 </body>
 </html>

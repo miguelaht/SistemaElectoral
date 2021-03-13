@@ -67,6 +67,7 @@
             <td>
                 <div>
                     <a aria-label="Candidatos"
+                       title="Candidatos"
                        href="papeletas.jsp?id=<%=rs.getString(1)%>&tipo=<%=rs.getString(2)%>&opt=c">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                              height="24">
@@ -76,6 +77,7 @@
                         </svg>
                     </a>
                     <a aria-label="Mesas"
+                       title="Mesas"
                        href="papeletas.jsp?id=<%=rs.getString(1)%>&tipo=<%=rs.getString(2)%>&opt=m">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                              height="24">

@@ -1,4 +1,5 @@
-<%@ page import="database.Dba" %><%--
+<%@ page import="database.Dba" %>
+<%@ page import="java.sql.ResultSet" %><%--
     Document   : votar
     Created on : Feb 24, 2021, 7:39:18 PM
     Author     : miguelaht
@@ -60,15 +61,34 @@
 <body>
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <h4>Papeleta de <%=request.getParameter("tipo")%>
+    <h4>Votar <%=request.getParameter("tipo")%>
     </h4>
     <div class="container" align="center">
+        <%
+            try {
+                Dba db = new Dba();
+                db.Conectar();
+                db.query.execute("SELECT ESTADO FROM MESAS WHERE ID=" + session.getAttribute("s_mesa"));
+                ResultSet rs = db.query.getResultSet();
+                if (rs.next()) {
+                    if (rs.getString(1).equals("1")) {%>
+
         <form action="votar.jsp" method="POST">
             <input hidden name="tipo" value="<%=request.getParameter("tipo")%>">
             <jsp:include page="papeleta.jsp">
                 <jsp:param name="tipo" value='<%=request.getParameter("tipo")%>'/>
             </jsp:include>
         </form>
+
+        <%
+                    } else {
+                        out.print("<h4>Espere la apertura de la mesa</h4>");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
     </div>
 </main>
 </body>
