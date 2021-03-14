@@ -32,34 +32,25 @@
             if (candidatos.length != 0) {
                 db.Conectar();
 
-                // get id of TipoPapeleta
-                int idTipo = 0;
-                db.query.execute(String.format("SELECT id FROM TipoPapeleta WHERE tipo = '%s'", request.getParameter("tipo").toUpperCase()));
-                ResultSet rs = db.query.getResultSet();
+                // create papeleta
+                String query = String.format("INSERT INTO Papeleta (tipo) VALUES (%s)",
+                        request.getParameter("tipo"));
 
+                String[] generatedColumns = {"ID"};
+                db.query.executeUpdate(query, generatedColumns);
+                ResultSet rs = db.query.getGeneratedKeys();
+
+                long idPapeleta = 0;
                 if (rs.next()) {
-                    idTipo = rs.getInt(1);
+                    idPapeleta = rs.getInt(1);
                 }
 
-                if (idTipo != 0) {
-                    // create papeleta
-                    String query = String.format("INSERT INTO Papeleta (tipo) VALUES (%s)", idTipo);
-                    String generatedColumns[] = {"ID"};
-                    db.query.executeUpdate(query, generatedColumns);
-                    rs = db.query.getGeneratedKeys();
-
-                    long idPapeleta = 0;
-                    if (rs.next()) {
-                        idPapeleta = rs.getInt(1);
-                    }
-
-                    // insert candidates into PapeletaElectoral with previously created papeleta
-                    for (String id : candidatos) {
-                        db.query.execute(String.format(
-                                "INSERT INTO PapeletaElectoral (id_candidato, id_papeleta) VALUES "
-                                + "('%s', %s)",
-                                id, idPapeleta));
-                    }
+                // insert candidates into PapeletaElectoral with previously created papeleta
+                for (String id : candidatos) {
+                    db.query.execute(String.format(
+                            "INSERT INTO PapeletaElectoral (id_candidato, id_papeleta) VALUES "
+                            + "('%s', %s)",
+                            id, idPapeleta));
                 }
             }
             db.desconectar();
@@ -76,13 +67,15 @@
 <jsp:include page="navbar.jsp"/>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <%
-        String partido = null;
+        String tipo = null;
         try {
             Dba db = new Dba();
-            db.query.execute(String.format("SELECT NOMBRE FROM PARTIDO WHERE ID=%s", request.getParameter("tipo")));
+            db.Conectar();
+            db.query.execute(String.format("SELECT TIPO FROM TIPOPAPELETA WHERE ID=%s",
+                    request.getParameter("tipo")));
             ResultSet rs = db.query.getResultSet();
             while (rs.next()) {
-                partido = rs.getString(1);
+                tipo = rs.getString(1);
                 break;
             }
         } catch (Exception e) {
@@ -90,16 +83,16 @@
         }
     %>
     <%
-        if (partido != null &&
-            (partido.equals("PRESIDENTE") ||
-             partido.equals("ALCALDE") || partido.equals("DIPUTADO"))) {
+        if (tipo != null &&
+            (tipo.equals("PRESIDENTE") ||
+             tipo.equals("ALCALDE") || tipo.equals("DIPUTADO"))) {
     %>
-    <h4>Nueva Papeleta <%=partido%>
+    <h4>Nueva Papeleta <%=tipo%>
     </h4>
     <form action="formPapeleta.jsp" method="POST">
         <jsp:include page='formList.jsp'>
             <jsp:param name="query"
-                       value='<%=String.format(queryPersonas, request.getParameter("tipo"))%>'/>
+                       value='<%=String.format(queryPersonas, tipo)%>'/>
             <jsp:param name="radio" value="hidden"/>
         </jsp:include>
         <div class="pt-3">
@@ -119,11 +112,11 @@
                 try {
                     Dba db = new Dba();
                     db.Conectar();
-                    db.query.execute("SELECT TIPO FROM TipoPapeleta");
+                    db.query.execute("SELECT ID, TIPO FROM TipoPapeleta");
                     ResultSet rs = db.query.getResultSet();
                     while (rs.next()) {
             %>
-            <option value="<%=rs.getString(1)%>"><%=rs.getString(1)%>
+            <option value="<%=rs.getString(1)%>"><%=rs.getString(2)%>
             </option>
             <%
                     }

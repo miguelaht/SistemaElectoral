@@ -45,6 +45,7 @@
 <html>
 <head>
     <jsp:include page="head.jsp"/>
+    <link rel="stylesheet" href="./css/foto.css">
     <script type="application/javascript">
         function addHidden(theForm, key, value) {
             // Create a hidden input element, and append it to the form:
@@ -53,6 +54,25 @@
             input.name = key; // 'the key/name of the attribute/field that is sent to the server
             input.value = value;
             theForm.appendChild(input);
+        }
+
+        function showPicture(src) {
+            // Get the modal
+            const modal = document.getElementById("fotoModal");
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            const modalImg = document.getElementById("img01");
+
+            modal.style.display = "block";
+            modalImg.src = src
+
+            // Get the <span> element that closes the modal
+            const span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
         }
     </script>
 </head>
@@ -125,6 +145,10 @@
         <%}%>
     </div>
 </main>
+<div id="fotoModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
 <jsp:include page="tableFooter.jsp"/>
 </body>
 </html>

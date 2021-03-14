@@ -40,6 +40,10 @@
           <element id="library" level="project" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" />
           <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" />
           <element id="library" level="project" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:13" />
+          <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:mac:13" />
+          <element id="library" level="project" name="Maven: org.openjfx:javafx-base:13" />
+          <element id="library" level="project" name="Maven: org.openjfx:javafx-base:mac:13" />
         </element>
       </element>
       <element id="directory" name="META-INF">

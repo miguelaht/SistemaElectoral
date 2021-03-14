@@ -145,27 +145,36 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="formpapeleta.jsp">
+                        <a class="nav-link" href="formPapeleta.jsp">
                             <span data-feather="users"></span>
-                            nueva papeleta
+                            Nueva Papeleta
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="listpapeletas.jsp">
+                           href="listPapeletas.jsp">
                             <span data-feather="users"></span>
-                            papeletas
+                            Papeletas
                         </a>
                     </li>
                 </ul>
                 <%}%>
-                <% if (session.getAttribute("s_rol").equals("MM")) {%>
+                <% if (session.getAttribute("s_rol").equals("MM") ||
+                       session.getAttribute("s_rol").equals("AS")) {%>
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>Reportes</span>
                     <a class="link-secondary" href="#" aria-label="add a new report">
                         <span data-feather="plus-circle"></span>
                     </a>
                 </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="presidentePDF.jsp">
+                            <span data-feather="users"></span>
+                            Presidente
+                        </a>
+                    </li>
+                </ul>
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="votantesPDF.jsp">
