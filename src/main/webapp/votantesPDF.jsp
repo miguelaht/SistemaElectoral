@@ -33,7 +33,6 @@
             documentoPDF.open();
 
             documentoPDF.addCreationDate();
-            documentoPDF.addTitle("DAW-PDF");
 
             //agregar parrafos
             documentoPDF.add(new Paragraph("Elecciones"));

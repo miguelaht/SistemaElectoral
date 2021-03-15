@@ -26,7 +26,6 @@
                    "WHERE T.TIPO='%s' AND M.ID_MESA=%s";
 %>
 
-
 <div class="row justify-content-between">
     <%
         try {
@@ -70,7 +69,9 @@
     %>
 </div>
 <div class="pt-3">
-    <button type="submit" name="submit" class="btn btn-sm btn-primary ">Confirmar
+    <button type="submit" name="submit" class="btn btn-sm btn-primary ">Votar
+    </button>
+    <button type="submit" name="cancel" class="btn btn-sm btn-danger ">Anular
     </button>
 </div>
 

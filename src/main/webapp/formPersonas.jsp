@@ -1,5 +1,6 @@
 <%@ page import="database.Dba" %>
-<%@ page import="java.sql.ResultSet" %><%--
+<%@ page import="java.sql.ResultSet" %>
+<%--
     Document   : formPersonas
     Created on : Feb 24, 2021, 2:19:03 PM
     Author     : miguelaht
@@ -33,6 +34,7 @@
     <label for="sur2" class="form-label">Segundo apellido</label>
     <input type="text" class="form-control" name="sur2" id="sur2" autocomplete="off">
 </div>
+<% if (session.getAttribute("s_id") != null) {%>
 <div class="col-md-6 pt-3">
     <label for="rol" class="form-label">Rol</label>
     <select class="form-control" name="rol" id="rol" onchange="showForm('candidato');">
@@ -61,6 +63,7 @@
     <h5>Candidato Politico</h5>
     <jsp:include page="formCandidatos.jsp"/>
 </div>
+<%}%>
 <div class="pt-5 d-grid gap-2 col-6 mx-auto">
     <input type="submit" class="btn btn-primary" class="form-control" name="submit"
            value="Registrar"

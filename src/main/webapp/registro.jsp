@@ -31,7 +31,7 @@
             if (exists == 0) {
                 // save personal data
                 db.query.execute(String.format("INSERT INTO PERSONAS (ID, NOMBRE1, NOMBRE2, APELLIDO1, "
-                                + "APELLIDO2, EMAIL, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                                               + "APELLIDO2, EMAIL, TELEFONO) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                         request.getParameter("id"), request.getParameter("name1"),
                         request.getParameter("name2"), request.getParameter("sur1"),
                         request.getParameter("sur2"), request.getParameter("email"), request.getParameter("cel")));
@@ -84,11 +84,6 @@
 
                 <jsp:include page="formPersonas.jsp"/>
                 <div class="col-md-6 pt-3">
-                </div>
-                <div class="pt-3 d-grid gap-2 col-6 mx-auto">
-                    <input type="submit" class="btn btn-primary" class="form-control" name="submit"
-                           value="Registrar"
-                           id="submit">
                 </div>
             </form>
         </div>

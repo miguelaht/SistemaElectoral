@@ -19,33 +19,37 @@
     }
 %>
 <%
-    if (request.getParameter("submit") != null) {
+    if (request.getParameter("submit") != null || request.getParameter("cancel") != null) {
         try {
             Dba db = new Dba();
+            db.Conectar();
 
-            String[] votos = request.getParameterValues("voto_id");
-            if (votos != null && votos.length > 0) {
-                db.Conectar();
-                for (String voto : votos) {
-                    db.query.execute(String.format("INSERT INTO VOTO (ID_CANDIDATO, ID_VOTANTE, ESTADO) VALUES ('%s', '%s', '1')", voto, session.getAttribute("s_id")));
+            if (request.getParameter("submit") != null) {
+                String[] votos = request.getParameterValues("voto_id");
+                if (votos != null && votos.length > 0) {
+                    for (String voto : votos) {
+                        db.query.execute(String.format("INSERT INTO VOTO (ID_CANDIDATO, ID_VOTANTE, ESTADO) VALUES ('%s', '%s', '1')", voto, session.getAttribute("s_id")));
+                    }
                 }
-                if (request.getParameter("tipo").equals("PRESIDENTE")) {
-                    db.query.execute(String.format("UPDATE PERSONAS SET V1=1 WHERE ID='%s'",
-                            session.getAttribute("s_id")));
-                    session.setAttribute("s_v1", "1");
-                }
-                if (request.getParameter("tipo").equals("ALCALDE")) {
-                    db.query.execute(String.format("UPDATE PERSONAS SET V2=1 WHERE ID='%s'",
-                            session.getAttribute("s_id")));
-                    session.setAttribute("s_v2", "1");
-                }
-                if (request.getParameter("tipo").equals("DIPUTADO")) {
-                    db.query.execute(String.format("UPDATE PERSONAS SET V3=1 WHERE ID='%s'",
-                            session.getAttribute("s_id")));
-                    session.setAttribute("s_v3", "1");
-                }
-                db.desconectar();
             }
+
+            if (request.getParameter("tipo").equals("PRESIDENTE")) {
+                db.query.execute(String.format("UPDATE PERSONAS SET V1=1 WHERE ID='%s'",
+                        session.getAttribute("s_id")));
+                session.setAttribute("s_v1", "1");
+            }
+            if (request.getParameter("tipo").equals("ALCALDE")) {
+                db.query.execute(String.format("UPDATE PERSONAS SET V2=1 WHERE ID='%s'",
+                        session.getAttribute("s_id")));
+                session.setAttribute("s_v2", "1");
+            }
+            if (request.getParameter("tipo").equals("DIPUTADO")) {
+                db.query.execute(String.format("UPDATE PERSONAS SET V3=1 WHERE ID='%s'",
+                        session.getAttribute("s_id")));
+                session.setAttribute("s_v3", "1");
+            }
+            db.desconectar();
+
             response.sendRedirect("home.jsp");
         } catch (Exception e) {
             e.printStackTrace();

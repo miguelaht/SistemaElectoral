@@ -26,9 +26,9 @@
                                                              "END;\n")) {
                 for (String id : ids) {
                     ps.setString(1, id);
-                    ps.setString(3, id);
+                    ps.setString(4, id);
                     ps.setString(2, request.getParameter("mesa"));
-                    ps.setString(4, request.getParameter("mesa"));
+                    ps.setString(3, request.getParameter("mesa"));
 
                     ps.execute();
                 }

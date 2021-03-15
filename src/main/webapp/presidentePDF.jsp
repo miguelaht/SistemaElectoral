@@ -19,7 +19,7 @@
     try {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition",
-                "attachment; filename=\"Votantes" + new Date().toString() + ".pdf\"");
+                "attachment; filename=\"Presidente" + new Date().toString() + ".pdf\"");
 
         Font titleFont = FontFactory.getFont("Helvetica Regular", 18);
         Font subTitleFont = FontFactory.getFont("Helvetica Regular", 14);
