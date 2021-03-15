@@ -27,8 +27,9 @@
             if (request.getParameter("submit") != null) {
                 String[] votos = request.getParameterValues("voto_id");
                 if (votos != null && votos.length > 0) {
+                    int value = votos.length < 10 ? 1 : 0;
                     for (String voto : votos) {
-                        db.query.execute(String.format("INSERT INTO VOTO (ID_CANDIDATO, ID_VOTANTE, ESTADO) VALUES ('%s', '%s', '1')", voto, session.getAttribute("s_id")));
+                        db.query.execute(String.format("INSERT INTO VOTO (ID_CANDIDATO, ID_VOTANTE, ESTADO) VALUES ('%s', '%s', '%s')", voto, session.getAttribute("s_id"), value));
                     }
                 }
             }
@@ -61,6 +62,28 @@
 <html>
 <head>
     <jsp:include page="head.jsp"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            const limit = 10;//Limit of selections
+            let state = 0;//Selection counter
+
+            //I detect when a common element changes
+            $(".form-check-input").change(function () {
+                //Check if the item is checked
+                if ($(this).is(':checked')) {
+                    if (state < limit) {
+                        state = parseInt(state) + 1;
+                    } else {
+                        $(this).prop('checked', false); // Unchecks it
+                        alert("Limite de " + limit + " marcas alcanzado");
+                    }
+                } else {
+                    state = parseInt(state) - 1;
+                }
+            })
+        })
+    </script>
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>

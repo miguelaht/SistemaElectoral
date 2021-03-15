@@ -19,7 +19,7 @@
 
 <div class="col-md-6">
     <label for="depto" class="form-label">Departamento</label>
-    <select id="depto" name="depto" id="depto" class="form-control">
+    <select id="depto" name="depto"  class="form-control">
         <option>Seleccionar</option>
         <option>Atlantida</option>
         <option>Colon</option>
@@ -43,7 +43,7 @@
 </div>
 <div class="col-md-6">
     <label for="muni" class="form-label">Municipio</label>
-    <select id="muni" name="muni" id="muni" class="form-control">
+    <select id="muni" name="muni"  class="form-control">
         <option>Seleccionar</option>
     </select>
 </div>

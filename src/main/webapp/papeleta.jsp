@@ -38,9 +38,9 @@
     %>
 
     <div class=" col-6 col-sm-3 p-3 border border-secondary border-1 rounded">
-        <div>
+        <label for="<%=rs.getString(2)%>">
             <img src="./media/<%=rs.getString(4)%>" class="img-thumbnail">
-        </div>
+        </label>
 
         <div class="px-auto"><%=rs.getString(3)%>
         </div>
@@ -49,10 +49,12 @@
                 <div class="checkbox-inline">
                     <% if (request.getParameter("tipo").equals("DIPUTADO")) {%>
                     <span><input type="checkbox" value="<%=rs.getString(2)%>"
+                                 id="<%=rs.getString(2)%>"
                                  class="form-check-input"
                                  name="voto_id"/></span>
                     <%} else {%>
-                    <span><input type="radio" value="<%=rs.getString(2)%>" class="form-check-input"
+                    <span><input type="radio" value="<%=rs.getString(2)%>"
+                                 id="<%=rs.getString(2)%>" class="form-check-input"
                                  name="voto_id"/></span>
                     <%}%>
                 </div>

@@ -36,14 +36,15 @@
                 "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE " +
                 "ORDER BY COUNT(V.ID) DESC";
 
-        String votos = "SELECT U.DEPARTAMENTO, COUNT(V.ID) " +
+        String votos = "SELECT DISTINCT COUNT(V.ID), U.DEPARTAMENTO \n" +
                        "FROM MESAPAPELETA MP " +
                        "INNER JOIN MESAS M ON M.ID = MP.ID_MESA " +
                        "INNER JOIN MESAPERSONA M2 on M.ID = M2.ID_MESA " +
                        "INNER JOIN UBICACION U on U.ID = M.UBICACION " +
                        "INNER JOIN VOTO V ON V.ID_VOTANTE = M2.ID_PERSONA " +
-                       "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' " +
-                       "GROUP BY V.ID, U.DEPARTAMENTO " +
+                       "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' AND V.ID_CANDIDATO IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL\n" +
+                       "      WHERE ID_PAPELETA=MP.ID_PAPELETA) " +
+                       "GROUP BY U.DEPARTAMENTO " +
                        "ORDER BY U.DEPARTAMENTO DESC";
 
         Document documentoPDF = new Document();
@@ -74,7 +75,7 @@
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
 
-            table.addCell(new Paragraph("Departament", bodyFont));
+            table.addCell(new Paragraph("Departamento", bodyFont));
             table.addCell(new Paragraph("Votos", bodyFont));
 
             Dba v = new Dba();
@@ -89,8 +90,8 @@
             ResultSet resultados = v.query.getResultSet();
             while (resultados.next()) {
                 // populate table
-                table.addCell(new Paragraph(resultados.getString(1), bodyFont));
                 table.addCell(new Paragraph(resultados.getString(2), bodyFont));
+                table.addCell(new Paragraph(resultados.getString(1), bodyFont));
             }
             v.desconectar();
 
