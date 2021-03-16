@@ -36,7 +36,7 @@
                 "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE " +
                 "ORDER BY COUNT(V.ID) DESC";
 
-        String votos = "SELECT DISTINCT COUNT(V.ID), U.DEPARTAMENTO \n" +
+        String votos = "SELECT DISTINCT COUNT(V.ID), U.DEPARTAMENTO\n" +
                        "FROM MESAPAPELETA MP " +
                        "INNER JOIN MESAS M ON M.ID = MP.ID_MESA " +
                        "INNER JOIN MESAPERSONA M2 on M.ID = M2.ID_MESA " +

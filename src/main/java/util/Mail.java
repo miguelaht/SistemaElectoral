@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  * @author miguelaht
  */
 public class Mail {
-    private Dotenv dotenv = Dotenv.configure()
+    private final Dotenv dotenv = Dotenv.configure()
             .ignoreIfMalformed()
             .ignoreIfMissing()
             .load();

@@ -4,7 +4,7 @@
     if (request.getParameter("submit") != null) {
         try {
             Dba db = new Dba();
-            String candidato[] = request.getParameterValues("id_p");
+            String[] candidato = request.getParameterValues("id_p");
             db.Conectar();
             if (candidato != null && candidato.length != 0) {
                 for (String id : candidato) {

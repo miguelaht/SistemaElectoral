@@ -181,7 +181,7 @@
                 <td><%=rs.getString(9)%>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-link"
+                    <button type="button" class="btn btn-sm btn-outline-info"
                             onclick="showPicture('./media/<%=rs.getString(10)%>')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                              fill="currentColor"

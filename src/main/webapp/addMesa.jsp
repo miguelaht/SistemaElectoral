@@ -18,7 +18,7 @@
                     , request.getParameter("depto"), request.getParameter("muni"), request.getParameter("lat"), "-" + request.getParameter("lng"), request.getParameter("desc"));
 
 
-            String generatedColumns[] = {"ID"};
+            String[] generatedColumns = {"ID"};
 
             db.Conectar();
 
@@ -34,14 +34,14 @@
                     request.getParameter("estado"), idUbicacion);
 
 
-            String generatedID[] = {"ID"};
+            String[] generatedID = {"ID"};
             db.query.executeUpdate(query, generatedID);
             rs = db.query.getGeneratedKeys();
             long idMesa = 0;
             if (rs.next()) {
                 idMesa = rs.getInt(1);
             }
-            String miembros[] = request.getParameterValues("id_p");
+            String[] miembros = request.getParameterValues("id_p");
             if (miembros != null && miembros.length != 0) {
                 for (String id : miembros) {
                     db.query.execute(String.format("INSERT INTO MESAPERSONA (ID_MESA, ID_PERSONA) VALUES (%s, '%s')", idMesa, id));

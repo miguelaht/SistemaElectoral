@@ -27,7 +27,7 @@
         try {
             Dba db = new Dba();
 
-            String candidatos[] = request.getParameterValues("id_p");
+            String[] candidatos = request.getParameterValues("id_p");
 
             if (candidatos.length != 0) {
                 db.Conectar();

@@ -29,7 +29,7 @@
     if (request.getParameter("submit") != null) {
         try {
             Dba db = new Dba();
-            String miembros[] = request.getParameterValues("id_p");
+            String[] miembros = request.getParameterValues("id_p");
 
             db.Conectar();
             if (miembros != null && miembros.length > 0) {
