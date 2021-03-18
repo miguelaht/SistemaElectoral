@@ -27,7 +27,7 @@
             if (request.getParameter("submit") != null) {
                 String[] votos = request.getParameterValues("voto_id");
                 if (votos != null && votos.length > 0) {
-                    int value = votos.length < 10 ? 1 : 0;
+                    int value =1;
                     for (String voto : votos) {
                         db.query.execute(String.format("INSERT INTO VOTO (ID_CANDIDATO, ID_VOTANTE, ESTADO) VALUES ('%s', '%s', '%s')", voto, session.getAttribute("s_id"), value));
                     }

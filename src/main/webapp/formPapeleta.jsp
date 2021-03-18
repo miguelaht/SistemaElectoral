@@ -16,10 +16,12 @@
     }
 %>
 <%
-    String queryPersonas = "SELECT P.ID, P.NOMBRE1, P.NOMBRE2, P.APELLIDO1, P.APELLIDO2 FROM PERSONAS P"
-                           + " INNER JOIN CANDIDATO C ON C.ID_PERSONA = P.ID"
-                           + " WHERE C.ID_CARGO = '%s' AND"
-                           + " P.ID NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
+    String queryPersonas =
+            "SELECT P.ID, P.NOMBRE1 ||''|| P.NOMBRE2||''|| P.APELLIDO1||''||  P.APELLIDO2, PA.NOMBRE FROM PERSONAS P"
+            + " INNER JOIN CANDIDATO C ON C.ID_PERSONA = P.ID" +
+            " INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO"
+            + " WHERE C.ID_CARGO = '%s' AND"
+            + " P.ID NOT IN (SELECT ID_CANDIDATO FROM PAPELETAELECTORAL)";
 %>
 
 <%
@@ -90,11 +92,64 @@
     <h4>Nueva Papeleta <%=tipo%>
     </h4>
     <form action="formPapeleta.jsp" method="POST">
-        <jsp:include page='formList.jsp'>
-            <jsp:param name="query"
-                       value='<%=String.format(queryPersonas, tipo)%>'/>
-            <jsp:param name="radio" value="hidden"/>
-        </jsp:include>
+        <table
+                id="table"
+                data-toggle="table"
+                data-pagination="true"
+                data-search="true"
+                data-key-events="true"
+                data-resizable="true"
+                data-cookie="true"
+                data-cookie-id-table="saveId"
+                data-click-to-select="true"
+                data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th>
+                    Seleccionar
+                </th>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Partido</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+
+                try {
+                    Dba db = new Dba();
+                    db.Conectar();
+
+                    db.query.execute(String.format(queryPersonas, tipo));
+                    ResultSet rs = db.query.getResultSet();
+                    while (rs.next()) {
+            %>
+            <tr>
+                <td>
+                    <label>
+                        <input <%=request.getParameter("check")%> value="<%=rs.getString(1)%>"
+                                                                  class="form-check-input"
+                                                                  type="checkbox" name="id_p"/>
+                    </label>
+                </td>
+                <td><%=rs.getString(1)%>
+                </td>
+                <td><%=rs.getString(2)%>
+                </td>
+                <td><%=rs.getString(3)%>
+                </td>
+            </tr>
+            <%
+                    }
+                    db.desconectar();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            %>
+            </tbody>
+
+
+        </table>
         <div class="pt-3">
             <input hidden type="text" name="tipo"
                    value='<%=request.getParameter("tipo")%>'/>
