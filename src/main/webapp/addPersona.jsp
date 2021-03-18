@@ -175,5 +175,6 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-    response.sendRedirect("newPersona.jsp");
+    out.print("<script>location.href = document.referrer;</script>");
+
 %>

@@ -15,11 +15,11 @@
             }
 
             db.desconectar();
-            response.sendRedirect("listPartidos.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        out.print("<script>location.href = document.referrer;</script>");
     }
 %>
 

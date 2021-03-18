@@ -28,13 +28,16 @@
 
 <div class="row justify-content-between">
     <%
+        Boolean isEmpty = true;
         try {
             Dba db = new Dba();
             db.Conectar();
             db.query.execute(String.format(query, request.getParameter("tipo"),
                     session.getAttribute("s_mesa")));
             ResultSet rs = db.query.getResultSet();
+
             while (rs.next()) {
+                isEmpty = false;
     %>
 
     <div class=" col-6 col-sm-3 p-3 border border-secondary border-1 rounded">
@@ -70,11 +73,18 @@
         }
     %>
 </div>
+<% if (!isEmpty) {
+%>
 <div class="pt-3">
     <button type="submit" name="submit" class="btn btn-sm btn-primary ">Votar
     </button>
     <button type="submit" name="cancel" class="btn btn-sm btn-danger ">Anular
     </button>
 </div>
+<%
+    } else {
+        out.print("<h4>No hay papeleta disponible</h4>");
+    }
+%>
 
 

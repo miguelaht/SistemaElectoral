@@ -27,7 +27,7 @@ public class Mail {
         String s = null;
         String err = null;
         try {
-            Process p = Runtime.getRuntime().exec(String.format("/Library/Frameworks/Python.framework/Versions/3.9/bin/python3 %s %s", path, mail));
+            Process p = Runtime.getRuntime().exec(String.format("python3 %s %s", path, mail));
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 

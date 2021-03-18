@@ -26,6 +26,7 @@
         <div style="display: none;" id="mesa-container">
             <input class="form-control" name="mesa" list="mesa-list"/>
             <datalist name="mesa-list" id="mesa-list">
+                <option value="0">Remover</option>
                 <%
                     try {
                         Dba db = new Dba();

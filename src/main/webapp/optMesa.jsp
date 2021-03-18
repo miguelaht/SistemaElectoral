@@ -30,6 +30,7 @@
             e.printStackTrace();
         }
     } else {
-        response.sendRedirect("home.jsp");
+        out.print("<script>location.href = document.referrer;</script>");
+
     }
 %>

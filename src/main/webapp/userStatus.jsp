@@ -26,5 +26,5 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-    response.sendRedirect("home.jsp");
+    out.print("<script>location.href = document.referrer;</script>");
 %>

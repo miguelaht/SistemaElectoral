@@ -98,16 +98,26 @@
                 db.query.execute("SELECT ESTADO FROM MESAS WHERE ID=" + session.getAttribute("s_mesa"));
                 ResultSet rs = db.query.getResultSet();
                 if (rs.next()) {
-                    if (rs.getString(1).equals("1")) {%>
+                    if (rs.getString(1).equals("1")) {
+                        db.query.execute(String.format("SELECT ESTADO_U FROM USUARIO WHERE ID_PERSONA='%s'",
+                                session.getAttribute("s_id")));
+                        rs = db.query.getResultSet();
+                        if (rs.next()) {
+                            if (rs.getString(1).equals("1")) {
 
+
+        %>
         <form action="votar.jsp" method="POST">
             <input hidden name="tipo" value="<%=request.getParameter("tipo")%>">
             <jsp:include page="papeleta.jsp">
                 <jsp:param name="tipo" value='<%=request.getParameter("tipo")%>'/>
             </jsp:include>
         </form>
-
         <%
+                            } else {
+                                out.print("<h4>Solicite la activacion de usuario en la mesa de votacion</h4>");
+                            }
+                        }
                     } else {
                         out.print("<h4>Espere la apertura de la mesa</h4>");
                     }

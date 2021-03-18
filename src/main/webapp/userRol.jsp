@@ -15,5 +15,5 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-    response.sendRedirect("listPersonas.jsp");
+    out.print("<script>location.href = document.referrer;</script>");
 %>
