@@ -10,9 +10,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <script>
-    let categories = [];
-    let series = [];
-    let values = []
+     categories = [];
+     series = [];
+     values = []
     <%
         try {
 
@@ -26,12 +26,12 @@
                 categories.add(rs.getString(1));
             }
 
-            db.query.execute("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE " +
+            db.query.execute(String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE " +
                 "FROM PERSONAS P " +
                 "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA " +
                 "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
                 "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO " +
-                "WHERE U.ROL='CA' AND C.ID_CARGO='PRESIDENTE'"
+                "WHERE U.ROL='CA' AND C.ID_CARGO='%s'", request.getParameter("cargo"))
                 );
             rs = db.query.getResultSet();
             List<List<String>> names= new ArrayList<>();
@@ -88,12 +88,12 @@
 e.printStackTrace();
 }
 %>
-    Highcharts.chart('depto-barChart', {
+    Highcharts.chart('<%=request.getParameter("container")%>', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Resultados por Departamento'
+            text: '<%=request.getParameter("title")%>'
         },
         xAxis: {
             categories,
