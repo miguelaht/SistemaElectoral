@@ -29,6 +29,7 @@
              class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse overflow-scroll">
             <div class="position-sticky pt-3 overflow-scroll">
                 <ul class="nav flex-column">
+                        <% if (session.getAttribute("s_rol").equals("EL")) {%>
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="votar.jsp?tipo=PRESIDENTE">
@@ -49,7 +50,7 @@
                             </a>
                         </li>
                     </ul>
-
+                        <%}%>
                         <% if (session.getAttribute("s_rol").equals("AS") ||
                                session.getAttribute("s_rol").equals("MM")) {%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -188,6 +189,12 @@
                             </a>
                         </li>
                         <%}%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="reportes.jsp">
+                                <span data-feather="users"></span>
+                                Por ubicacion
+                            </a>
+                        </li>
                     </ul>
                         <%}%>
                         <%if (session.getAttribute("s_rol").equals("MM")) {%>
