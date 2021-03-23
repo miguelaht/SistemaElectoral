@@ -21,13 +21,14 @@
             db.Conectar();
 
             String query = null;
+
             if (request.getParameter("cargo").equals("PRESIDENTE")){
-            query = String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, COUNT(V.ID) " +
+                query = String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, COUNT(V.ID) " +
                 "FROM PERSONAS P " +
                 "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA " +
                 "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
                 "INNER JOIN VOTO V ON V.ID_CANDIDATO = P.ID " +
-                "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO " +
+                "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO "+
                 "WHERE V.ESTADO=1 AND U.ROL='CA' AND C.ID_CARGO='%s' " +
                 "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE", request.getParameter("cargo"));
             } else if(request.getParameter("cargo").equals("ALCALDE")){
@@ -36,11 +37,24 @@
                 "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA " +
                 "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
                 "INNER JOIN VOTO V ON V.ID_CANDIDATO = P.ID " +
-                "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO " +
+                "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO "+
                 "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA = V.ID_VOTANTE " +
                 "INNER JOIN MESAS M ON MP.ID_MESA = M.ID " +
                 "INNER JOIN UBICACION U ON U.ID = M.UBICACION " +
                 "WHERE V.ESTADO=1 AND U.ROL='CA' AND C.ID_CARGO='%s' AND U.MUNICIPIO='"+request.getParameter("muni")+"' " +
+                "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE",request.getParameter("cargo"));
+            } else if(request.getParameter("cargo").equals("ALCALDE")){
+                query =
+                String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, COUNT(V.ID) " +
+                "FROM PERSONAS P " +
+                "INNER JOIN CANDIDATO C ON P.ID = C.ID_PERSONA " +
+                "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
+                "INNER JOIN VOTO V ON V.ID_CANDIDATO = P.ID " +
+                "INNER JOIN PARTIDO PA ON PA.ID = C.ID_PARTIDO "+
+                "INNER JOIN MESAPERSONA MP ON MP.ID_PERSONA = V.ID_VOTANTE " +
+                "INNER JOIN MESAS M ON MP.ID_MESA = M.ID " +
+                "INNER JOIN UBICACION U ON U.ID = M.UBICACION " +
+                "WHERE V.ESTADO=1 AND U.ROL='CA' AND C.ID_CARGO='%s' AND U.DEPARTAMENTO='"+request.getParameter("depto")+"' " +
                 "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE",request.getParameter("cargo"));
             }
             db.query.execute(query);
@@ -64,20 +78,30 @@
             }
 
             String voto= null;
+
             if (request.getParameter("cargo").equals("ALCALDE")){
                 voto = "SELECT DISTINCT COUNT(V.ID), M.ID_MESA " +
                      "FROM MESAPERSONA M " +
-                     "INNER JOIN VOTO V ON M.ID_PERSONA = V.ID_VOTANTE " +
+                     "INNER JOIN VOTO V ON M.ID_PERSONA = V.ID_VOTANTE "+
                      "INNER JOIN MESAS MM ON M.ID_MESA = MM.ID " +
                      "INNER JOIN UBICACION U ON U.ID = MM.UBICACION " +
                      "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' AND U.MUNICIPIO='"+request.getParameter("muni")+"' " +
                      "GROUP BY M.ID_MESA";
-            } else if(request.getParameter("cargo").equals("PRESIDENTE")) {
-                voto ="SELECT DISTINCT COUNT(V.ID), M.ID_MESA " +
+
+            } else if (request.getParameter("cargo").equals("DIPUTADO")){
+                voto = "SELECT DISTINCT COUNT(V.ID), M.ID_MESA " +
                      "FROM MESAPERSONA M " +
-                     "INNER JOIN VOTO V ON M.ID_PERSONA = V.ID_VOTANTE " +
-                     "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' " +
+                     "INNER JOIN VOTO V ON M.ID_PERSONA = V.ID_VOTANTE "+
+                     "INNER JOIN MESAS MM ON M.ID_MESA = MM.ID " +
+                     "INNER JOIN UBICACION U ON U.ID = MM.UBICACION " +
+                     "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' AND U.DEPARTAMENTO='"+request.getParameter("depto")+"' " +
                      "GROUP BY M.ID_MESA";
+            } else if(request.getParameter("cargo").equals("PRESIDENTE")) {
+                voto = "SELECT DISTINCT COUNT(V.ID), M.ID_MESA " +
+                     "FROM MESAPERSONA M " +
+                     "INNER JOIN VOTO V ON M.ID_PERSONA = V.ID_VOTANTE "+
+                     "WHERE V.ESTADO=1 AND V.ID_CANDIDATO='%s' " +
+                    "GROUP BY M.ID_MESA";
             }
 
 
@@ -105,6 +129,9 @@ e.printStackTrace();
         chart: {
             type: 'pie'
         },
+        lang: {
+            noData: 'No hay datos para mostrar'
+        },
         title: {
             text: '<%=request.getParameter("title")%>'
         },
@@ -129,8 +156,6 @@ e.printStackTrace();
             pointFormat:
                 '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
         },
-        // series
-
         series: [
             {
                 name: "Resultados",
@@ -143,7 +168,7 @@ e.printStackTrace();
         drilldown: {
             series
         }
-    });
+        });
 
 </script>
 

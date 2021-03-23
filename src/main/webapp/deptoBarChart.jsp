@@ -92,6 +92,9 @@ e.printStackTrace();
         chart: {
             type: 'column'
         },
+        lang: {
+            noData: 'No hay datos para mostrar'
+        },
         title: {
             text: '<%=request.getParameter("title")%>'
         },

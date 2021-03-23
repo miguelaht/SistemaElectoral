@@ -164,7 +164,8 @@
                         </li>
                     </ul>
                         <%}%>
-                        <% if (session.getAttribute("s_rol").equals("AS")) {%>
+                        <% if (session.getAttribute("s_rol").equals("AS") ||
+                        session.getAttribute("s_rol").equals("MA")) {%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Reportes</span>
                         <a class="link-secondary" href="#" aria-label="add a new report">
@@ -178,14 +179,15 @@
                                 Presidente
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
+                        <% if (session.getAttribute("s_rol").equals("AS")) {%>
                         <li class="nav-item">
                             <a class="nav-link" href="votantesPDF.jsp">
                                 <span data-feather="users"></span>
                                 Votantes
                             </a>
                         </li>
+                        <%}%>
                     </ul>
                         <%}%>
                         <%if (session.getAttribute("s_rol").equals("MM")) {%>
@@ -202,24 +204,21 @@
                                 Presidente
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link" href="candidatoPDF.jsp?tipo=ALCALDE">
                                 <span data-feather="users"></span>
                                 Alcalde
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link" href="candidatoPDF.jsp?tipo=DIPUTADO">
                                 <span data-feather="users"></span>
                                 Diputados
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link" href="votantesPDF.jsp">
                                 <span data-feather="users"></span>
@@ -230,14 +229,14 @@
                         <%}%>
                         <%if (session.getAttribute("s_rol").equals("MA")) {%>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Resultados</span>
+                        <span>Resultados Graficos</span>
                         <a class="link-secondary" href="#" aria-label="add a new report">
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="candidatoPDF.jsp?tipo=PRESIDENTE">
+                            <a class="nav-link" href="Presidente.jsp">
                                 <span data-feather="users"></span>
                                 Presidente
                             </a>
@@ -245,7 +244,7 @@
                     </ul>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="candidatoPDF.jsp?tipo=ALCALDE">
+                            <a class="nav-link" href="Alcalde.jsp">
                                 <span data-feather="users"></span>
                                 Alcaldes
                             </a>
@@ -253,7 +252,7 @@
                     </ul>
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="candidatoPDF.jsp?tipo=DIPUTADO">
+                            <a class="nav-link" href="Diputado.jsp">
                                 <span data-feather="users"></span>
                                 Diputados
                             </a>
