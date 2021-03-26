@@ -180,15 +180,19 @@
                                 Presidente
                             </a>
                         </li>
-
-                        <% if (session.getAttribute("s_rol").equals("AS")) {%>
                         <li class="nav-item">
-                            <a class="nav-link" href="votantesPDF.jsp">
+                            <a class="nav-link" href="candidatoPDF.jsp?tipo=ALCALDE">
                                 <span data-feather="users"></span>
-                                Votantes
+                                Alcalde
                             </a>
                         </li>
-                        <%}%>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="candidatoPDF.jsp?tipo=DIPUTADO">
+                                <span data-feather="users"></span>
+                                Diputados
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="reportes.jsp">
                                 <span data-feather="users"></span>
@@ -211,7 +215,6 @@
                                 Presidente
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="candidatoPDF.jsp?tipo=ALCALDE">
                                 <span data-feather="users"></span>

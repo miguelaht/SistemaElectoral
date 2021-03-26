@@ -38,9 +38,9 @@
         db.desconectar();
         if (mail == null) {
             out.print("<script>alert('Clave de acceso es: " + code +
-                      "'); window.location='listPersonas.jsp';</script>");
+                      "'); location.href = document.referrer;</script>");
         } else {
-            out.print("<script>alert('Success'); window.location='listPersonas.jsp';</script>");
+            out.print("<script>alert('Success'); location.href = document.referrer;</script>");
         }
     } catch (Exception e) {
         e.printStackTrace();

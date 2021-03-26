@@ -40,14 +40,15 @@
 %>
 
 <%
-    if (session.getAttribute("s_rol").equals("MA") && request.getParameter("muni") != null ||
-        request.getParameter("depto") != null) {
+    if
+    ((session.getAttribute("s_rol").equals("MA") || session.getAttribute("s_rol").equals("AS")) &&
+     (request.getParameter("muni") != null || request.getParameter("depto") != null)) {
         try {
             // municipio o departamento
             String param = request.getParameter("muni") != null ? request.getParameter("muni") :
                     request.getParameter("depto");
 
-            String[] cargos = {"PRESIDENTE", "ALDALDE", "DIPUTADO"};
+            String[] cargos = {"PRESIDENTE", "ALCALDE", "DIPUTADO"};
 
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition",
@@ -88,7 +89,7 @@
                         "      U.MUNICIPIO = '%s'\n" +
                         "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' || P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE\n" +
                         "ORDER BY COUNT(V.ID) DESC";
-            }else if (request.getParameter("depto") != null) {
+            } else if (request.getParameter("depto") != null) {
                 query = "SELECT DISTINCT COUNT(V.ID),\n" +
                         "                P.ID,\n" +
                         "                P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' || P.APELLIDO1 || ' ' || P.APELLIDO2,\n" +
@@ -136,5 +137,7 @@
         } catch (DocumentException de) {
             throw new IOException(de.getMessage());
         }
+    } else {
+        out.print("<script>location.href = document.referrer;</script>");
     }
 %>
