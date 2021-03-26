@@ -30,9 +30,9 @@
         }
 
         if (resp) {
-            out.print("<script>alert('Exito');</script>");
+            out.print("<script>alert('Exito'); location.href = document.referrer;</script>");
         } else {
-            out.print("<script>alert('Error');</script>");
+            out.print("<script>alert('Error'); location.href = document.referrer;</script>");
         }
     }
 %>

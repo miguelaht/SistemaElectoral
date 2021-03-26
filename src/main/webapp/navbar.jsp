@@ -274,7 +274,7 @@
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
-                    <form id="form1" action="index.jsp" method="POST">
+                    <form id="form1" action="votosXML.jsp" method="POST">
                         <div class="px-3">
                         <ul class="nav flex-column">
 

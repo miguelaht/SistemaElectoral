@@ -43,7 +43,7 @@
                 "INNER JOIN UBICACION U ON U.ID = M.UBICACION " +
                 "WHERE V.ESTADO=1 AND U.ROL='CA' AND C.ID_CARGO='%s' AND U.MUNICIPIO='"+request.getParameter("muni")+"' " +
                 "GROUP BY P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, PA.NOMBRE",request.getParameter("cargo"));
-            } else if(request.getParameter("cargo").equals("ALCALDE")){
+            } else if(request.getParameter("cargo").equals("DIPUTADO")){
                 query =
                 String.format("SELECT P.ID, P.NOMBRE1 || ' ' || P.NOMBRE2 || ' ' ||  P.APELLIDO1 || ' ' || P.APELLIDO2, COUNT(V.ID) " +
                 "FROM PERSONAS P " +

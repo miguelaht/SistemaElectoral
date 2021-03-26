@@ -16,14 +16,16 @@
 
 <%
     String query = "SELECT PE.ID_PAPELETA, PE.ID_CANDIDATO,\n" +
-                   "PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO\n" +
+                   "PR.NOMBRE1 || ' ' || PR.NOMBRE2 || ' ' || PR.APELLIDO1 || ' ' || PR.APELLIDO2, CA.FOTO, PA.NOMBRE \n" +
                    "FROM PAPELETAELECTORAL PE\n" +
                    "INNER JOIN CANDIDATO CA on CA.ID_PERSONA = PE.ID_CANDIDATO\n" +
                    "INNER JOIN PERSONAS PR ON CA.ID_PERSONA = PR.ID\n" +
                    "INNER JOIN MESAPAPELETA M on PE.ID_PAPELETA = M.ID_PAPELETA\n" +
                    "INNER JOIN PAPELETA P on P.ID = PE.ID_PAPELETA\n" +
                    "INNER JOIN TIPOPAPELETA T on T.ID = P.TIPO\n" +
-                   "WHERE T.TIPO='%s' AND M.ID_MESA=%s";
+                   "INNER JOIN PARTIDO PA ON CA.ID_PARTIDO = PA.ID\n" +
+                   "WHERE T.TIPO='%s' AND M.ID_MESA=%s\n" +
+                   "ORDER BY PA.NOMBRE DESC";
 %>
 
 <div class="row justify-content-between">
@@ -41,6 +43,7 @@
     %>
 
     <div class=" col-6 col-sm-3 p-3 border border-secondary border-1 rounded">
+        <label><%=rs.getString(5)%></label>
         <label for="<%=rs.getString(2)%>">
             <img src="./media/<%=rs.getString(4)%>" class="img-thumbnail">
         </label>

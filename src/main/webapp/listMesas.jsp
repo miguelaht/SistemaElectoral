@@ -53,7 +53,6 @@
             data-pagination="true"
             data-search="true"
             data-show-columns="true"
-            data-show-pagination-switch="true"
             data-show-refresh="true"
             data-key-events="true"
             data-show-toggle="true"
@@ -85,7 +84,10 @@
                 db.query.execute("SELECT M.ID, M.ESTADO, U.DEPARTAMENTO, U.MUNICIPIO, U.LATITUD, U.LONGITUD, U.DESCRIPCION, COUNT(MP.ID_MESA), U.ID " +
                                  "FROM MESAS M " +
                                  "LEFT JOIN MESAPERSONA MP ON M.ID = MP.ID_MESA " +
+                                 "INNER JOIN PERSONAS P ON MP.ID_PERSONA = P.ID " +
+                                 "INNER JOIN USUARIO U ON P.ID = U.ID_PERSONA " +
                                  "INNER JOIN UBICACION U ON M.UBICACION = U.ID " +
+                                 "WHERE U.ROL='EL' " +
                                  "GROUP BY M.ID, M.ESTADO, U.DEPARTAMENTO, U.MUNICIPIO, U.LATITUD, U.LONGITUD, U.DESCRIPCION, U.ID");
                 ResultSet rs = db.query.getResultSet();
                 while (rs.next()) {
