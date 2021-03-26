@@ -34,6 +34,7 @@
           <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:mac:13" />
           <element id="library" level="project" name="Maven: org.openjfx:javafx-base:13" />
           <element id="library" level="project" name="Maven: org.openjfx:javafx-base:mac:13" />
+          <element id="library" level="project" name="Maven: org.jdom:jdom:2.0.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

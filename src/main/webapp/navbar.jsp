@@ -251,16 +251,14 @@
                                 Presidente
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link" href="Alcalde.jsp">
                                 <span data-feather="users"></span>
                                 Alcaldes
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link" href="Diputado.jsp">
                                 <span data-feather="users"></span>
@@ -268,6 +266,34 @@
                             </a>
                         </li>
                     </ul>
+                        <%}%>
+                        <%if(session.getAttribute("s_rol").equals("AS")){%>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Importar/Exportar Votos</span>
+                        <a class="link-secondary" href="#" aria-label="add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <form id="form1" action="index.jsp" method="POST">
+                        <div class="px-3">
+                        <ul class="nav flex-column">
+
+                            <li class="nav-item">
+                                <button class="btn btn-sm btn-outline-primary" id="imp" name="imp">
+                                    <span data-feather="users"></span>
+                                    Importar
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-sm btn-outline-info"  id="exp" name="exp">
+                                    <span data-feather="users"></span>
+                                    Exportar
+                                </button>
+                            </li>
+
+                        </ul>
+                        </div>
+                    </form>
                         <%}%>
             </div>
         </nav>
